@@ -1,302 +1,196 @@
-```javascript
 /*
  * ============================================================
  * BOLETIM CARIOCA
- * ============================================================
+ * js/app.js
  *
- * AUTENTICAÇÃO
- * PERFIS
- * PAINEL EDITORIAL
+ * BASE ESTÁVEL
  *
- * VERSÃO ESTÁVEL DA BASE
- * ============================================================
- */
-
-
-/*
- * ============================================================
- * 1. CONFIGURAÇÃO SUPABASE
- * ============================================================
- */
-
-const SUPABASE_URL =
-    "https://pnzfvqigcqeoiqiwymzo.supabase.co";
-
-const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBuemZ2cWlnY3Flb2lxaXd5bXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzMTE2NTQsImV4cCI6MjEwMTg4NzY1NH0.4CyQ8Tq00AWJ9eUSbr5Z1kWnqIVwd1k8ooPXEN3uzZU";
-
-
-/*
- * ============================================================
- * 2. CRIAÇÃO DO CLIENTE SUPABASE
- * ============================================================
+ * - Supabase
+ * - Login
+ * - Cadastro
+ * - Google
+ * - Recuperação de senha
+ * - Logout
+ * - Perfil
+ * - Painel editorial
+ * - Listagem de artigos
  *
  * IMPORTANTE:
- *
- * O CDN do Supabase precisa estar carregado no HTML ANTES
- * deste arquivo.
- *
- * Exemplo:
- *
- * <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
- * <script src="js/app.js"></script>
- *
- * O cliente é colocado em:
- *
- * window.supabaseClient
- *
- * Isso também permite testar pelo console.
+ * Este arquivo deve ser carregado DEPOIS do Supabase JS.
+ * ============================================================
  */
 
-if (
-    !window.supabase ||
-    typeof window.supabase.createClient !== "function"
-) {
+(function () {
 
-    console.error(
-        "ERRO CRÍTICO: Supabase JS não foi carregado antes do app.js."
-    );
+    "use strict";
 
-} else {
 
-    window.supabaseClient =
+    /*
+     * ========================================================
+     * CONFIGURAÇÃO SUPABASE
+     * ========================================================
+     */
+
+    const SUPABASE_URL =
+        "https://pnzfvqigcqeoiqiwymzo.supabase.co";
+
+    const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBuemZ2cWlnY3Flb2lxaXd5bXpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzMTE2NTQsImV4cCI6MjEwMTg4NzY1NH0.4CyQ8Tq00AWJ9eUSbr5Z1kWnqIVwd1k8ooPXEN3uzZU";
+
+
+    /*
+     * ========================================================
+     * VERIFICAÇÃO DO SUPABASE
+     * ========================================================
+     */
+
+    if (
+        !window.supabase ||
+        typeof window.supabase.createClient !== "function"
+    ) {
+
+        console.error(
+            "Boletim Carioca: Supabase JS não foi carregado."
+        );
+
+        return;
+    }
+
+
+    /*
+     * ========================================================
+     * CLIENTE SUPABASE
+     * ========================================================
+     */
+
+    const supabaseClient =
         window.supabase.createClient(
             SUPABASE_URL,
             SUPABASE_ANON_KEY
         );
 
-    console.log(
-        "Supabase client inicializado:",
-        window.supabaseClient
+
+    /*
+     * Disponibiliza o cliente globalmente.
+     *
+     * Isso também permite inspeção pelo console.
+     */
+
+    window.supabaseClient =
+        supabaseClient;
+
+
+    /*
+     * ========================================================
+     * INICIALIZAÇÃO DA INTERFACE
+     * ========================================================
+     */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeApplication
     );
-}
 
 
-/*
- * ============================================================
- * 3. APLICAÇÃO
- * ============================================================
- */
+    /*
+     * ========================================================
+     * APLICAÇÃO
+     * ========================================================
+     */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+    async function initializeApplication() {
 
         /*
-         * --------------------------------------------------------
-         * GARANTIA DO CLIENTE
-         * --------------------------------------------------------
-         */
-
-        const supabaseClient =
-            window.supabaseClient;
-
-
-        if (!supabaseClient) {
-
-            console.error(
-                "ERRO CRÍTICO: window.supabaseClient não existe."
-            );
-
-            return;
-        }
-
-
-        console.log(
-            "Boletim Carioca: app.js iniciado."
-        );
-
-
-        /*
-         * ========================================================
-         * 4. ELEMENTOS DE AUTENTICAÇÃO
-         * ========================================================
+         * ----------------------------------------------------
+         * ELEMENTOS DE AUTENTICAÇÃO
+         * ----------------------------------------------------
          */
 
         const authModal =
-            document.getElementById(
-                "authModal"
-            );
+            document.getElementById("authModal");
 
         const authClose =
-            document.getElementById(
-                "authClose"
-            );
+            document.getElementById("authClose");
 
         const loginButton =
-            document.getElementById(
-                "loginButton"
-            );
+            document.getElementById("loginButton");
 
         const registerButton =
-            document.getElementById(
-                "registerButton"
-            );
+            document.getElementById("registerButton");
 
         const logoutButton =
-            document.getElementById(
-                "logoutButton"
-            );
+            document.getElementById("logoutButton");
 
         const loggedOutArea =
-            document.getElementById(
-                "loggedOutArea"
-            );
+            document.getElementById("loggedOutArea");
 
         const loggedInArea =
-            document.getElementById(
-                "loggedInArea"
-            );
+            document.getElementById("loggedInArea");
 
         const userName =
-            document.getElementById(
-                "userName"
-            );
+            document.getElementById("userName");
 
         const loginForm =
-            document.getElementById(
-                "loginForm"
-            );
+            document.getElementById("loginForm");
 
         const registerForm =
-            document.getElementById(
-                "registerForm"
-            );
+            document.getElementById("registerForm");
 
         const authTitle =
-            document.getElementById(
-                "authTitle"
-            );
+            document.getElementById("authTitle");
 
         const authSubtitle =
-            document.getElementById(
-                "authSubtitle"
-            );
+            document.getElementById("authSubtitle");
 
         const authMessage =
-            document.getElementById(
-                "authMessage"
-            );
+            document.getElementById("authMessage");
 
         const authSwitchButton =
-            document.getElementById(
-                "authSwitchButton"
-            );
+            document.getElementById("authSwitchButton");
 
         const authSwitchText =
-            document.getElementById(
-                "authSwitchText"
-            );
+            document.getElementById("authSwitchText");
 
         const googleLoginButton =
-            document.getElementById(
-                "googleLoginButton"
-            );
+            document.getElementById("googleLoginButton");
 
         const forgotPasswordButton =
-            document.getElementById(
-                "forgotPasswordButton"
-            );
+            document.getElementById("forgotPasswordButton");
 
 
         /*
-         * ========================================================
-         * 5. ELEMENTOS DO PAINEL EDITORIAL
-         * ========================================================
-         *
-         * Estes elementos são opcionais.
-         *
-         * A autenticação NÃO deve quebrar se o painel ainda
-         * não estiver presente no HTML.
+         * ----------------------------------------------------
+         * ELEMENTOS DO PAINEL EDITORIAL
+         * ----------------------------------------------------
          */
 
         const editorialPanel =
-            document.getElementById(
-                "editorialPanel"
-            );
+            document.getElementById("editorialPanel");
 
         const editorialRole =
-            document.getElementById(
-                "editorialRole"
-            );
+            document.getElementById("editorialRole");
 
         const articlesList =
-            document.getElementById(
-                "articlesList"
-            );
+            document.getElementById("articlesList");
 
         const newArticleButton =
-            document.getElementById(
-                "newArticleButton"
-            );
+            document.getElementById("newArticleButton");
 
 
         /*
-         * ========================================================
-         * 6. VERIFICAÇÃO DA AUTENTICAÇÃO
-         * ========================================================
-         */
-
-        const authElements = {
-
-            authModal,
-            authClose,
-            loginButton,
-            registerButton,
-            logoutButton,
-            loggedOutArea,
-            loggedInArea,
-            userName,
-            loginForm,
-            registerForm,
-            authTitle,
-            authSubtitle,
-            authMessage,
-            authSwitchButton,
-            authSwitchText,
-            googleLoginButton,
-            forgotPasswordButton
-
-        };
-
-
-        const missingAuthElements =
-            Object.entries(
-                authElements
-            )
-            .filter(
-                ([, element]) =>
-                    !element
-            )
-            .map(
-                ([name]) =>
-                    name
-            );
-
-
-        if (
-            missingAuthElements.length > 0
-        ) {
-
-            console.error(
-                "ELEMENTOS DE AUTENTICAÇÃO AUSENTES:",
-                missingAuthElements
-            );
-
-            return;
-        }
-
-
-        /*
-         * ========================================================
-         * 7. UTILITÁRIOS
-         * ========================================================
+         * ====================================================
+         * FUNÇÕES AUXILIARES DE INTERFACE
+         * ====================================================
          */
 
         function showMessage(
             message,
             isError = false
         ) {
+
+            if (!authMessage) {
+                return;
+            }
 
             authMessage.textContent =
                 message;
@@ -314,6 +208,10 @@ document.addEventListener(
 
         function hideMessage() {
 
+            if (!authMessage) {
+                return;
+            }
+
             authMessage.textContent =
                 "";
 
@@ -324,47 +222,85 @@ document.addEventListener(
         }
 
 
-        function escapeHtml(
-            value
-        ) {
+        function showLoginForm() {
 
-            return String(
-                value ?? ""
-            )
-            .replaceAll(
-                "&",
-                "&amp;"
-            )
-            .replaceAll(
-                "<",
-                "&lt;"
-            )
-            .replaceAll(
-                ">",
-                "&gt;"
-            )
-            .replaceAll(
-                '"',
-                "&quot;"
-            )
-            .replaceAll(
-                "'",
-                "&#039;"
-            );
+            if (loginForm) {
+                loginForm.style.display =
+                    "flex";
+            }
+
+            if (registerForm) {
+                registerForm.style.display =
+                    "none";
+            }
+
+            if (authTitle) {
+                authTitle.textContent =
+                    "Entrar";
+            }
+
+            if (authSubtitle) {
+                authSubtitle.textContent =
+                    "Entre para participar das conversas do Boletim Carioca.";
+            }
+
+            if (authSwitchText) {
+                authSwitchText.textContent =
+                    "Ainda não possui uma conta?";
+            }
+
+            if (authSwitchButton) {
+                authSwitchButton.textContent =
+                    "Criar conta";
+            }
+
+            hideMessage();
         }
 
 
-        /*
-         * ========================================================
-         * 8. MODAL
-         * ========================================================
-         */
+        function showRegisterForm() {
+
+            if (loginForm) {
+                loginForm.style.display =
+                    "none";
+            }
+
+            if (registerForm) {
+                registerForm.style.display =
+                    "flex";
+            }
+
+            if (authTitle) {
+                authTitle.textContent =
+                    "Criar conta";
+            }
+
+            if (authSubtitle) {
+                authSubtitle.textContent =
+                    "Crie sua conta para participar do Boletim Carioca.";
+            }
+
+            if (authSwitchText) {
+                authSwitchText.textContent =
+                    "Já possui uma conta?";
+            }
+
+            if (authSwitchButton) {
+                authSwitchButton.textContent =
+                    "Entrar";
+            }
+
+            hideMessage();
+        }
+
 
         function openAuthModal(
             mode = "login"
         ) {
 
-            hideMessage();
+            if (!authModal) {
+                return;
+            }
 
             authModal.classList.add(
                 "visible"
@@ -374,7 +310,6 @@ document.addEventListener(
                 "aria-hidden",
                 "false"
             );
-
 
             if (
                 mode === "register"
@@ -392,6 +327,10 @@ document.addEventListener(
 
         function closeAuthModal() {
 
+            if (!authModal) {
+                return;
+            }
+
             authModal.classList.remove(
                 "visible"
             );
@@ -405,342 +344,297 @@ document.addEventListener(
         }
 
 
-        function showLoginForm() {
+        function escapeHtml(
+            value
+        ) {
 
-            loginForm.style.display =
-                "flex";
-
-            registerForm.style.display =
-                "none";
-
-            authTitle.textContent =
-                "Entrar";
-
-            authSubtitle.textContent =
-                "Entre para participar das conversas do Boletim Carioca.";
-
-            authSwitchText.textContent =
-                "Ainda não possui uma conta?";
-
-            authSwitchButton.textContent =
-                "Criar conta";
-
-            hideMessage();
-        }
-
-
-        function showRegisterForm() {
-
-            loginForm.style.display =
-                "none";
-
-            registerForm.style.display =
-                "flex";
-
-            authTitle.textContent =
-                "Criar conta";
-
-            authSubtitle.textContent =
-                "Crie sua conta para comentar nas notícias.";
-
-            authSwitchText.textContent =
-                "Já possui uma conta?";
-
-            authSwitchButton.textContent =
-                "Entrar";
-
-            hideMessage();
+            return String(
+                value ?? ""
+            )
+                .replaceAll(
+                    "&",
+                    "&amp;"
+                )
+                .replaceAll(
+                    "<",
+                    "&lt;"
+                )
+                .replaceAll(
+                    ">",
+                    "&gt;"
+                )
+                .replaceAll(
+                    '"',
+                    "&quot;"
+                )
+                .replaceAll(
+                    "'",
+                    "&#039;"
+                );
         }
 
 
         /*
-         * ========================================================
-         * 9. PERFIL ATUAL
-         * ========================================================
+         * ====================================================
+         * PERFIL ATUAL
+         * ====================================================
          */
 
         async function getCurrentProfile() {
 
-            try {
-
-                const {
-                    data,
-                    error
-                } =
-                    await supabaseClient.auth.getUser();
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.getUser();
 
 
-                if (
-                    error ||
-                    !data ||
-                    !data.user
-                ) {
-
-                    return {
-
-                        user: null,
-                        profile: null
-
-                    };
-                }
-
-
-                const user =
-                    data.user;
-
-
-                const {
-                    data: profile,
-                    error: profileError
-                } =
-                    await supabaseClient
-                        .from("profiles")
-                        .select(
-                            "id, display_name, role, is_banned"
-                        )
-                        .eq(
-                            "id",
-                            user.id
-                        )
-                        .maybeSingle();
-
-
-                if (profileError) {
-
-                    console.error(
-                        "ERRO AO BUSCAR PERFIL:",
-                        profileError
-                    );
-
-                    return {
-
-                        user,
-                        profile: null
-
-                    };
-                }
-
+            if (
+                error ||
+                !data ||
+                !data.user
+            ) {
 
                 return {
-
-                    user,
-                    profile
-
+                    user: null,
+                    profile: null
                 };
+            }
 
-            } catch (error) {
+
+            const user =
+                data.user;
+
+
+            const {
+                data: profile,
+                error: profileError
+            } =
+                await supabaseClient
+                    .from("profiles")
+                    .select(
+                        "id, display_name, role, is_banned"
+                    )
+                    .eq(
+                        "id",
+                        user.id
+                    )
+                    .maybeSingle();
+
+
+            if (profileError) {
 
                 console.error(
-                    "ERRO INESPERADO AO BUSCAR PERFIL:",
-                    error
+                    "Boletim Carioca — erro ao carregar perfil:",
+                    profileError
                 );
 
                 return {
-
-                    user: null,
+                    user,
                     profile: null
-
                 };
             }
+
+
+            return {
+                user,
+                profile
+            };
         }
 
 
         /*
-         * ========================================================
-         * 10. ATUALIZAÇÃO DA INTERFACE
-         * ========================================================
+         * ====================================================
+         * ATUALIZAÇÃO DA INTERFACE DE AUTENTICAÇÃO
+         * ====================================================
          */
 
         async function updateAuthUI() {
 
-            try {
+            if (
+                !loggedOutArea ||
+                !loggedInArea
+            ) {
+                return;
+            }
 
-                const {
-                    data,
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.getSession();
+
+
+            if (error) {
+
+                console.error(
+                    "Boletim Carioca — erro ao obter sessão:",
                     error
-                } =
-                    await supabaseClient.auth.getSession();
+                );
+
+                return;
+            }
 
 
-                if (error) {
-
-                    console.error(
-                        "ERRO AO OBTER SESSÃO:",
-                        error
-                    );
-
-                    return;
-                }
+            const session =
+                data.session;
 
 
-                const session =
-                    data.session;
+            /*
+             * ------------------------------------------------
+             * DESLOGADO
+             * ------------------------------------------------
+             */
 
-
-                /*
-                 * ------------------------------------------------
-                 * DESLOGADO
-                 * ------------------------------------------------
-                 */
-
-                if (!session) {
-
-                    loggedOutArea.style.display =
-                        "flex";
-
-                    loggedInArea.classList.remove(
-                        "visible"
-                    );
-
-                    userName.textContent =
-                        "";
-
-                    return;
-                }
-
-
-                /*
-                 * ------------------------------------------------
-                 * LOGADO
-                 * ------------------------------------------------
-                 */
+            if (!session) {
 
                 loggedOutArea.style.display =
-                    "none";
+                    "flex";
 
-                loggedInArea.classList.add(
+                loggedInArea.classList.remove(
                     "visible"
                 );
 
+                if (userName) {
+                    userName.textContent =
+                        "";
+                }
+
+                return;
+            }
+
+
+            /*
+             * ------------------------------------------------
+             * LOGADO
+             * ------------------------------------------------
+             */
+
+            loggedOutArea.style.display =
+                "none";
+
+            loggedInArea.classList.add(
+                "visible"
+            );
+
+
+            if (userName) {
 
                 userName.textContent =
-                    session.user.email ||
-                    "";
+                    session.user.email || "";
+            }
 
 
-                const {
-                    user,
-                    profile
-                } =
-                    await getCurrentProfile();
+            const {
+                user,
+                profile
+            } =
+                await getCurrentProfile();
 
 
-                if (!user) {
-
-                    return;
-                }
-
-
-                if (!profile) {
-
-                    return;
-                }
+            if (!user) {
+                return;
+            }
 
 
-                if (
-                    profile.is_banned
-                ) {
+            if (!profile) {
+                return;
+            }
+
+
+            if (
+                profile.is_banned
+            ) {
+
+                if (userName) {
 
                     userName.textContent =
                         "Conta suspensa";
-
-                    return;
                 }
 
+                return;
+            }
+
+
+            if (userName) {
 
                 userName.textContent =
                     profile.display_name ||
                     user.email ||
                     "";
-
-            } catch (error) {
-
-                console.error(
-                    "ERRO AO ATUALIZAR INTERFACE:",
-                    error
-                );
             }
         }
 
 
         /*
-         * ========================================================
-         * 11. LOGIN
-         * ========================================================
+         * ====================================================
+         * LOGIN
+         * ====================================================
          */
 
-        loginForm.addEventListener(
-            "submit",
-            async (event) => {
+        if (loginForm) {
 
-                event.preventDefault();
+            loginForm.addEventListener(
+                "submit",
+                async function (event) {
 
-                hideMessage();
+                    event.preventDefault();
 
-
-                const email =
-                    document.getElementById(
-                        "loginEmail"
-                    )
-                    .value
-                    .trim();
+                    hideMessage();
 
 
-                const password =
-                    document.getElementById(
-                        "loginPassword"
-                    )
-                    .value;
+                    const emailInput =
+                        document.getElementById(
+                            "loginEmail"
+                        );
+
+                    const passwordInput =
+                        document.getElementById(
+                            "loginPassword"
+                        );
 
 
-                if (
-                    !email ||
-                    !password
-                ) {
-
-                    showMessage(
-                        "Preencha e-mail e senha.",
-                        true
-                    );
-
-                    return;
-                }
+                    const email =
+                        emailInput
+                            ? emailInput.value.trim()
+                            : "";
 
 
-                const submitButton =
-                    loginForm.querySelector(
-                        "button[type='submit']"
-                    );
+                    const password =
+                        passwordInput
+                            ? passwordInput.value
+                            : "";
 
 
-                if (submitButton) {
+                    if (
+                        !email ||
+                        !password
+                    ) {
 
-                    submitButton.disabled =
-                        true;
+                        showMessage(
+                            "Preencha e-mail e senha.",
+                            true
+                        );
 
-                    submitButton.textContent =
-                        "Entrando...";
-                }
+                        return;
+                    }
 
-
-                try {
 
                     const {
                         error
                     } =
                         await supabaseClient.auth
                             .signInWithPassword({
-
                                 email,
                                 password
-
                             });
 
 
                     if (error) {
 
                         console.error(
-                            "ERRO REAL NO LOGIN:",
+                            "Boletim Carioca — erro de login:",
                             error
                         );
 
@@ -760,113 +654,96 @@ document.addEventListener(
                     await updateAuthUI();
 
                     await loadEditorialPanel();
-
-                } catch (error) {
-
-                    console.error(
-                        "ERRO INESPERADO NO LOGIN:",
-                        error
-                    );
-
-                    showMessage(
-                        "Ocorreu um erro ao tentar entrar.",
-                        true
-                    );
-
-                } finally {
-
-                    if (submitButton) {
-
-                        submitButton.disabled =
-                            false;
-
-                        submitButton.textContent =
-                            "Entrar";
-                    }
                 }
-            }
-        );
+            );
+        }
 
 
         /*
-         * ========================================================
-         * 12. CADASTRO
-         * ========================================================
+         * ====================================================
+         * CADASTRO
+         * ====================================================
          */
 
-        registerForm.addEventListener(
-            "submit",
-            async (event) => {
+        if (registerForm) {
 
-                event.preventDefault();
+            registerForm.addEventListener(
+                "submit",
+                async function (event) {
 
-                hideMessage();
+                    event.preventDefault();
 
-
-                const name =
-                    document.getElementById(
-                        "registerName"
-                    )
-                    .value
-                    .trim();
+                    hideMessage();
 
 
-                const email =
-                    document.getElementById(
-                        "registerEmail"
-                    )
-                    .value
-                    .trim();
+                    const nameInput =
+                        document.getElementById(
+                            "registerName"
+                        );
+
+                    const emailInput =
+                        document.getElementById(
+                            "registerEmail"
+                        );
+
+                    const passwordInput =
+                        document.getElementById(
+                            "registerPassword"
+                        );
 
 
-                const password =
-                    document.getElementById(
-                        "registerPassword"
-                    )
-                    .value;
+                    const name =
+                        nameInput
+                            ? nameInput.value.trim()
+                            : "";
 
 
-                if (!name) {
-
-                    showMessage(
-                        "Informe seu nome.",
-                        true
-                    );
-
-                    return;
-                }
+                    const email =
+                        emailInput
+                            ? emailInput.value.trim()
+                            : "";
 
 
-                if (
-                    password.length < 6
-                ) {
-
-                    showMessage(
-                        "A senha deve ter pelo menos 6 caracteres.",
-                        true
-                    );
-
-                    return;
-                }
+                    const password =
+                        passwordInput
+                            ? passwordInput.value
+                            : "";
 
 
-                const submitButton =
-                    registerForm.querySelector(
-                        "button[type='submit']"
-                    );
+                    if (!name) {
+
+                        showMessage(
+                            "Informe seu nome.",
+                            true
+                        );
+
+                        return;
+                    }
 
 
-                if (submitButton) {
+                    if (!email) {
 
-                    submitButton.disabled =
-                        true;
+                        showMessage(
+                            "Informe seu e-mail.",
+                            true
+                        );
 
-                    submitButton.textContent =
-                        "Criando conta...";
-                }
+                        return;
+                    }
 
 
-                try {
+                    if (
+                        password.length < 6
+                    ) {
+
+                        showMessage(
+                            "A senha deve ter pelo menos 6 caracteres.",
+                            true
+                        );
+
+                        return;
+                    }
+
 
                     const {
                         data,
@@ -874,28 +751,21 @@ document.addEventListener(
                     } =
                         await supabaseClient.auth
                             .signUp({
-
                                 email,
                                 password,
-
                                 options: {
-
                                     data: {
-
                                         full_name:
                                             name
-
                                     }
-
                                 }
-
                             });
 
 
                     if (error) {
 
                         console.error(
-                            "ERRO REAL NO CADASTRO:",
+                            "Boletim Carioca — erro no cadastro:",
                             error
                         );
 
@@ -908,14 +778,7 @@ document.addEventListener(
                     }
 
 
-                    /*
-                     * Caso a confirmação de e-mail esteja
-                     * ativada, normalmente não haverá sessão.
-                     */
-
-                    if (
-                        !data.session
-                    ) {
+                    if (!data.session) {
 
                         showMessage(
                             "Conta criada. Verifique seu e-mail para confirmar o cadastro."
@@ -934,109 +797,68 @@ document.addEventListener(
                     await updateAuthUI();
 
                     await loadEditorialPanel();
-
-                } catch (error) {
-
-                    console.error(
-                        "ERRO INESPERADO NO CADASTRO:",
-                        error
-                    );
-
-                    showMessage(
-                        "Ocorreu um erro ao criar a conta.",
-                        true
-                    );
-
-                } finally {
-
-                    if (submitButton) {
-
-                        submitButton.disabled =
-                            false;
-
-                        submitButton.textContent =
-                            "Criar minha conta";
-                    }
                 }
-            }
-        );
+            );
+        }
 
 
         /*
-         * ========================================================
-         * 13. LOGIN COM GOOGLE
-         * ========================================================
+         * ====================================================
+         * LOGIN GOOGLE
+         * ====================================================
          */
 
-        googleLoginButton.addEventListener(
-            "click",
-            async () => {
+        if (googleLoginButton) {
 
-                hideMessage();
+            googleLoginButton.addEventListener(
+                "click",
+                async function () {
 
+                    hideMessage();
 
-                try {
 
                     const {
                         error
                     } =
                         await supabaseClient.auth
                             .signInWithOAuth({
-
-                                provider:
-                                    "google",
-
+                                provider: "google",
                                 options: {
-
                                     redirectTo:
                                         window.location.origin +
                                         window.location.pathname
-
                                 }
-
                             });
 
 
                     if (error) {
 
                         console.error(
-                            "ERRO GOOGLE:",
+                            "Boletim Carioca — erro Google:",
                             error
                         );
 
                         showMessage(
-                            "Não foi possível iniciar o login com Google.",
+                            error.message,
                             true
                         );
                     }
-
-                } catch (error) {
-
-                    console.error(
-                        "ERRO INESPERADO GOOGLE:",
-                        error
-                    );
-
-                    showMessage(
-                        "Não foi possível iniciar o login com Google.",
-                        true
-                    );
                 }
-            }
-        );
+            );
+        }
 
 
         /*
-         * ========================================================
-         * 14. LOGOUT
-         * ========================================================
+         * ====================================================
+         * LOGOUT
+         * ====================================================
          */
 
-        logoutButton.addEventListener(
-            "click",
-            async () => {
+        if (logoutButton) {
 
-                try {
+            logoutButton.addEventListener(
+                "click",
+                async function () {
 
                     const {
                         error
@@ -1048,7 +870,7 @@ document.addEventListener(
                     if (error) {
 
                         console.error(
-                            "ERRO AO SAIR:",
+                            "Boletim Carioca — erro ao sair:",
                             error
                         );
 
@@ -1059,51 +881,48 @@ document.addEventListener(
                     await updateAuthUI();
 
                     await loadEditorialPanel();
-
-                } catch (error) {
-
-                    console.error(
-                        "ERRO INESPERADO AO SAIR:",
-                        error
-                    );
                 }
-            }
-        );
+            );
+        }
 
 
         /*
-         * ========================================================
-         * 15. RECUPERAÇÃO DE SENHA
-         * ========================================================
+         * ====================================================
+         * RECUPERAÇÃO DE SENHA
+         * ====================================================
          */
 
-        forgotPasswordButton.addEventListener(
-            "click",
-            async () => {
+        if (forgotPasswordButton) {
 
-                hideMessage();
+            forgotPasswordButton.addEventListener(
+                "click",
+                async function () {
 
-
-                const email =
-                    document.getElementById(
-                        "loginEmail"
-                    )
-                    .value
-                    .trim();
+                    hideMessage();
 
 
-                if (!email) {
-
-                    showMessage(
-                        "Digite seu e-mail primeiro.",
-                        true
-                    );
-
-                    return;
-                }
+                    const emailInput =
+                        document.getElementById(
+                            "loginEmail"
+                        );
 
 
-                try {
+                    const email =
+                        emailInput
+                            ? emailInput.value.trim()
+                            : "";
+
+
+                    if (!email) {
+
+                        showMessage(
+                            "Digite seu e-mail primeiro.",
+                            true
+                        );
+
+                        return;
+                    }
+
 
                     const {
                         error
@@ -1112,11 +931,9 @@ document.addEventListener(
                             .resetPasswordForEmail(
                                 email,
                                 {
-
                                     redirectTo:
                                         window.location.origin +
                                         window.location.pathname
-
                                 }
                             );
 
@@ -1124,7 +941,7 @@ document.addEventListener(
                     if (error) {
 
                         console.error(
-                            "ERRO RECUPERAÇÃO:",
+                            "Boletim Carioca — erro recuperação:",
                             error
                         );
 
@@ -1140,140 +957,133 @@ document.addEventListener(
                     showMessage(
                         "Enviamos as instruções de recuperação para seu e-mail."
                     );
+                }
+            );
+        }
 
-                } catch (error) {
 
-                    console.error(
-                        "ERRO INESPERADO RECUPERAÇÃO:",
-                        error
-                    );
+        /*
+         * ====================================================
+         * BOTÃO ENTRAR
+         * ====================================================
+         */
 
-                    showMessage(
-                        "Não foi possível enviar o e-mail de recuperação.",
-                        true
+        if (loginButton) {
+
+            loginButton.addEventListener(
+                "click",
+                function () {
+
+                    openAuthModal(
+                        "login"
                     );
                 }
-            }
-        );
+            );
+        }
 
 
         /*
-         * ========================================================
-         * 16. BOTÃO ENTRAR
-         * ========================================================
+         * ====================================================
+         * BOTÃO CRIAR CONTA
+         * ====================================================
          */
 
-        loginButton.addEventListener(
-            "click",
-            () => {
+        if (registerButton) {
 
-                console.log(
-                    "Boletim Carioca: botão Entrar clicado."
-                );
+            registerButton.addEventListener(
+                "click",
+                function () {
 
-                openAuthModal(
-                    "login"
-                );
-            }
-        );
-
-
-        /*
-         * ========================================================
-         * 17. BOTÃO CRIAR CONTA
-         * ========================================================
-         */
-
-        registerButton.addEventListener(
-            "click",
-            () => {
-
-                console.log(
-                    "Boletim Carioca: botão Criar conta clicado."
-                );
-
-                openAuthModal(
-                    "register"
-                );
-            }
-        );
-
-
-        /*
-         * ========================================================
-         * 18. FECHAR MODAL
-         * ========================================================
-         */
-
-        authClose.addEventListener(
-            "click",
-            () => {
-
-                closeAuthModal();
-
-            }
-        );
-
-
-        /*
-         * ========================================================
-         * 19. ALTERNAR LOGIN/CADASTRO
-         * ========================================================
-         */
-
-        authSwitchButton.addEventListener(
-            "click",
-            () => {
-
-                const loginVisible =
-                    loginForm.style.display !==
-                    "none";
-
-
-                if (
-                    loginVisible
-                ) {
-
-                    showRegisterForm();
-
-                } else {
-
-                    showLoginForm();
+                    openAuthModal(
+                        "register"
+                    );
                 }
-            }
-        );
+            );
+        }
 
 
         /*
-         * ========================================================
-         * 20. CLICAR FORA DO MODAL
-         * ========================================================
+         * ====================================================
+         * FECHAR MODAL
+         * ====================================================
          */
 
-        authModal.addEventListener(
-            "click",
-            (event) => {
+        if (authClose) {
 
-                if (
-                    event.target ===
-                    authModal
-                ) {
+            authClose.addEventListener(
+                "click",
+                function () {
 
                     closeAuthModal();
                 }
-            }
-        );
+            );
+        }
 
 
         /*
-         * ========================================================
-         * 21. ESC
-         * ========================================================
+         * ====================================================
+         * ALTERNAR LOGIN / CADASTRO
+         * ====================================================
+         */
+
+        if (authSwitchButton) {
+
+            authSwitchButton.addEventListener(
+                "click",
+                function () {
+
+                    const loginVisible =
+                        loginForm &&
+                        loginForm.style.display !==
+                            "none";
+
+
+                    if (loginVisible) {
+
+                        showRegisterForm();
+
+                    } else {
+
+                        showLoginForm();
+                    }
+                }
+            );
+        }
+
+
+        /*
+         * ====================================================
+         * CLICAR FORA DO MODAL
+         * ====================================================
+         */
+
+        if (authModal) {
+
+            authModal.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target ===
+                        authModal
+                    ) {
+
+                        closeAuthModal();
+                    }
+                }
+            );
+        }
+
+
+        /*
+         * ====================================================
+         * ESC
+         * ====================================================
          */
 
         document.addEventListener(
             "keydown",
-            (event) => {
+            function (event) {
 
                 if (
                     event.key ===
@@ -1287,9 +1097,9 @@ document.addEventListener(
 
 
         /*
-         * ========================================================
-         * 22. PAINEL EDITORIAL
-         * ========================================================
+         * ====================================================
+         * PAINEL EDITORIAL
+         * ====================================================
          */
 
         async function loadEditorialPanel() {
@@ -1300,8 +1110,8 @@ document.addEventListener(
 
             if (
                 !editorialPanel ||
-                !editorialRole ||
-                !articlesList
+                !articlesList ||
+                !editorialRole
             ) {
 
                 return;
@@ -1315,43 +1125,9 @@ document.addEventListener(
                 await getCurrentProfile();
 
 
-            /*
-             * ----------------------------------------------------
-             * DESLOGADO
-             * ----------------------------------------------------
-             */
-
-            if (!user) {
-
-                editorialPanel.style.display =
-                    "none";
-
-                return;
-            }
-
-
-            /*
-             * ----------------------------------------------------
-             * SEM PERFIL
-             * ----------------------------------------------------
-             */
-
-            if (!profile) {
-
-                editorialPanel.style.display =
-                    "none";
-
-                return;
-            }
-
-
-            /*
-             * ----------------------------------------------------
-             * BANIDO
-             * ----------------------------------------------------
-             */
-
             if (
+                !user ||
+                !profile ||
                 profile.is_banned
             ) {
 
@@ -1362,18 +1138,10 @@ document.addEventListener(
             }
 
 
-            /*
-             * ----------------------------------------------------
-             * FUNÇÕES EDITORIAIS
-             * ----------------------------------------------------
-             */
-
             const editorialRoles = [
-
                 "journalist",
                 "editor",
                 "superadmin"
-
             ];
 
 
@@ -1389,12 +1157,6 @@ document.addEventListener(
                 return;
             }
 
-
-            /*
-             * ----------------------------------------------------
-             * MOSTRAR PAINEL
-             * ----------------------------------------------------
-             */
 
             editorialPanel.style.display =
                 "block";
@@ -1414,9 +1176,9 @@ document.addEventListener(
 
 
         /*
-         * ========================================================
-         * 23. CARREGAR ARTIGOS
-         * ========================================================
+         * ====================================================
+         * ARTIGOS
+         * ====================================================
          */
 
         async function loadArticles(
@@ -1424,19 +1186,17 @@ document.addEventListener(
             userId
         ) {
 
-            if (
-                !articlesList
-            ) {
-
+            if (!articlesList) {
                 return;
             }
 
 
-            articlesList.innerHTML = `
+            articlesList.innerHTML =
+                `
                 <div class="article-loading">
                     Carregando notícias...
                 </div>
-            `;
+                `;
 
 
             let query =
@@ -1463,11 +1223,10 @@ document.addEventListener(
 
             /*
              * Jornalista:
+             * apenas os próprios artigos.
              *
-             * consulta somente os próprios artigos.
-             *
-             * Isso acompanha as políticas RLS que já
-             * validamos no banco.
+             * Editor/Superadmin:
+             * deixa o RLS decidir o que pode ser visto.
              */
 
             if (
@@ -1493,33 +1252,29 @@ document.addEventListener(
             if (error) {
 
                 console.error(
-                    "ERRO AO CARREGAR ARTIGOS:",
+                    "Boletim Carioca — erro ao carregar artigos:",
                     error
                 );
 
 
-                articlesList.innerHTML = `
+                articlesList.innerHTML =
+                    `
                     <p>
                         Não foi possível carregar as notícias.
                     </p>
-                `;
+                    `;
 
                 return;
             }
 
-
-            /*
-             * ----------------------------------------------------
-             * NENHUM ARTIGO
-             * ----------------------------------------------------
-             */
 
             if (
                 !data ||
                 data.length === 0
             ) {
 
-                articlesList.innerHTML = `
+                articlesList.innerHTML =
+                    `
                     <div class="article-empty">
 
                         <h3>
@@ -1532,29 +1287,22 @@ document.addEventListener(
                         </p>
 
                     </div>
-                `;
+                    `;
 
                 return;
             }
 
 
-            /*
-             * ----------------------------------------------------
-             * LISTA
-             * ----------------------------------------------------
-             */
-
             articlesList.innerHTML =
                 data
                     .map(
-                        (article) => {
+                        function (article) {
 
                             const date =
                                 article.created_at
                                     ? new Date(
                                         article.created_at
-                                    )
-                                    .toLocaleDateString(
+                                    ).toLocaleDateString(
                                         "pt-BR"
                                     )
                                     : "";
@@ -1610,33 +1358,26 @@ document.addEventListener(
 
 
             console.log(
-                "ARTIGOS EDITORIAIS:",
+                "Boletim Carioca — artigos:",
                 data
             );
         }
 
 
         /*
-         * ========================================================
-         * 24. NOVA NOTÍCIA
-         * ========================================================
-         *
-         * O editor completo ainda será implementado.
-         *
-         * Por enquanto mantemos o botão funcional sem
-         * quebrar o restante da aplicação.
+         * ====================================================
+         * NOVA NOTÍCIA
+         * ====================================================
          */
 
-        if (
-            newArticleButton
-        ) {
+        if (newArticleButton) {
 
             newArticleButton.addEventListener(
                 "click",
-                () => {
+                function () {
 
                     console.log(
-                        "NOVA NOTÍCIA clicada."
+                        "Nova notícia — editor será implementado na próxima etapa."
                     );
 
                     alert(
@@ -1648,37 +1389,20 @@ document.addEventListener(
 
 
         /*
-         * ========================================================
-         * 25. ALTERAÇÕES DE AUTENTICAÇÃO
-         * ========================================================
+         * ====================================================
+         * ESTADO DE AUTENTICAÇÃO
+         * ====================================================
          */
 
         supabaseClient.auth.onAuthStateChange(
-            (
-                event,
-                session
-            ) => {
-
-                console.log(
-                    "AUTH EVENT:",
-                    event
-                );
-
-
-                /*
-                 * Não executamos consultas complexas diretamente
-                 * dentro do callback.
-                 *
-                 * O setTimeout permite que a mudança de sessão
-                 * seja finalizada antes das consultas seguintes.
-                 */
+            function () {
 
                 setTimeout(
-                    async () => {
+                    function () {
 
-                        await updateAuthUI();
+                        updateAuthUI();
 
-                        await loadEditorialPanel();
+                        loadEditorialPanel();
 
                     },
                     0
@@ -1688,29 +1412,25 @@ document.addEventListener(
 
 
         /*
-         * ========================================================
-         * 26. INICIALIZAÇÃO
-         * ========================================================
+         * ====================================================
+         * ESTADO INICIAL
+         * ====================================================
          */
 
-        (async function initializeApp() {
+        await updateAuthUI();
 
-            console.log(
-                "Boletim Carioca: inicializando..."
-            );
+        await loadEditorialPanel();
 
 
-            await updateAuthUI();
+        /*
+         * ====================================================
+         * MARCADOR DE SUCESSO
+         * ====================================================
+         */
 
-            await loadEditorialPanel();
-
-
-            console.log(
-                "Boletim Carioca: inicialização concluída."
-            );
-
-        })();
-
+        console.log(
+            "Boletim Carioca: aplicação inicializada corretamente."
+        );
     }
-);
-```
+
+})();
