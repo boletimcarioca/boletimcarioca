@@ -803,6 +803,317 @@ document.addEventListener("DOMContentLoaded", () => {
      * ========================================================
      */
 
-    updateAuthUI();
+        /*
+     * ========================================================
+     * PAINEL EDITORIAL
+     * ========================================================
+     */
+
+    const editorialPanel =
+        document.getElementById("editorialPanel");
+
+    const editorialRole =
+        document.getElementById("editorialRole");
+
+    const articlesList =
+        document.getElementById("articlesList");
+
+    const newArticleButton =
+        document.getElementById("newArticleButton");
+
+
+    async function getCurrentProfile() {
+
+        const {
+            data: {
+                user
+            },
+            error: authError
+        } = await supabaseClient.auth.getUser();
+
+
+        if (authError || !user) {
+            return {
+                user: null,
+                profile: null
+            };
+        }
+
+
+        const {
+            data: profile,
+            error: profileError
+        } = await supabaseClient
+            .from("profiles")
+            .select(
+                "id, display_name, role, is_banned"
+            )
+            .eq("id", user.id)
+            .single();
+
+
+        if (profileError) {
+
+            console.error(
+                "Erro ao carregar perfil editorial:",
+                profileError
+            );
+
+            return {
+                user,
+                profile: null
+            };
+        }
+
+
+        return {
+            user,
+            profile
+        };
+    }
+
+
+    async function loadEditorialPanel() {
+
+        if (!editorialPanel) {
+            return;
+        }
+
+
+        const {
+            user,
+            profile
+        } = await getCurrentProfile();
+
+
+        if (
+            !user ||
+            !profile ||
+            profile.is_banned
+        ) {
+
+            editorialPanel.style.display = "none";
+
+            return;
+        }
+
+
+        const editorialRoles = [
+            "journalist",
+            "editor",
+            "superadmin"
+        ];
+
+
+        if (
+            !editorialRoles.includes(
+                profile.role
+            )
+        ) {
+
+            editorialPanel.style.display = "none";
+
+            return;
+        }
+
+
+        editorialPanel.style.display = "block";
+
+
+        editorialRole.textContent =
+            "Você está conectado como " +
+            profile.role +
+            ".";
+
+
+        await loadArticles(
+            profile.role
+        );
+    }
+
+
+    async function loadArticles(role) {
+
+        articlesList.innerHTML = `
+            <div class="article-loading">
+                Carregando notícias...
+            </div>
+        `;
+
+
+        let query = supabaseClient
+            .from("articles")
+            .select(
+                `
+                id,
+                author_id,
+                title,
+                slug,
+                status,
+                created_at,
+                updated_at
+                `
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+        /*
+         * Jornalista:
+         * busca seus próprios artigos.
+         *
+         * Editor/SuperAdmin:
+         * busca os artigos que o RLS
+         * permitir.
+         */
+
+        if (role === "journalist") {
+
+            const {
+                data: {
+                    user
+                }
+            } = await supabaseClient.auth.getUser();
+
+
+            query = query.eq(
+                "author_id",
+                user.id
+            );
+        }
+
+
+        const {
+            data,
+            error
+        } = await query;
+
+
+        if (error) {
+
+            console.error(
+                "Erro ao carregar artigos:",
+                error
+            );
+
+
+            articlesList.innerHTML = `
+                <p>
+                    Não foi possível carregar as notícias.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        if (!data || data.length === 0) {
+
+            articlesList.innerHTML = `
+                <div class="article-empty">
+                    <h3>
+                        Nenhuma notícia ainda.
+                    </h3>
+
+                    <p>
+                        Crie sua primeira notícia
+                        para começar.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        articlesList.innerHTML =
+            data.map(article => {
+
+                const date =
+                    article.created_at
+                        ? new Date(
+                            article.created_at
+                        ).toLocaleDateString(
+                            "pt-BR"
+                        )
+                        : "";
+
+
+                return `
+                    <article
+                        class="editorial-article"
+                    >
+
+                        <div>
+
+                            <div
+                                class="article-status"
+                            >
+                                ${article.status}
+                            </div>
+
+                            <h3>
+                                ${escapeHtml(
+                                    article.title ||
+                                    "Sem título"
+                                )}
+                            </h3>
+
+                            <p>
+                                ${date}
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <button
+                                class="auth-button"
+                                type="button"
+                                data-article-id="${article.id}"
+                            >
+                                Editar
+                            </button>
+
+                        </div>
+
+                    </article>
+                `;
+
+            }).join("");
+
+
+        console.log(
+            "ARTIGOS EDITORIAIS:",
+            data
+        );
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+
+    /*
+     * ========================================================
+     * INICIALIZAÇÃO
+     * ========================================================
+     */
+
+    await updateAuthUI();
+
+    await loadEditorialPanel();
 
 });
