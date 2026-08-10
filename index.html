@@ -1,150 +1,174 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <meta
-        name="description"
-        content="Boletim Carioca — informação, cultura e acontecimentos do Rio de Janeiro."
-    >
+<meta
+    name="description"
+    content="Boletim Carioca — informação, cultura e acontecimentos do Rio de Janeiro."
+>
 
-    <meta
-        name="theme-color"
-        content="#f4f0e8"
-    >
+<meta
+    name="theme-color"
+    content="#f4f0e8"
+>
 
-    <title>Boletim Carioca</title>
+<title>Boletim Carioca</title>
 
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
+<link
+    rel="stylesheet"
+    href="css/style.css"
+>
+```
 
 </head>
 
 <body>
 
-    <header class="site-header">
+<header class="site-header">
 
-        <div class="header-inner">
+```
+<div class="header-inner">
 
-            <a
-                href="./"
-                class="brand"
-                aria-label="Boletim Carioca - página inicial"
-            >
-
-                <span class="brand-name">
-                    Boletim Carioca
-                </span>
-
-                <span class="brand-city">
-                    Rio
-                </span>
-
-            </a>
-
-            <div class="auth-area logged-out" id="loggedOutArea">
-
-    <button
-        class="auth-button"
-        id="loginButton"
-        type="button"
+    <a
+        href="./"
+        class="brand"
+        aria-label="Boletim Carioca - página inicial"
     >
-        Entrar
-    </button>
 
-    <button
-        class="auth-button primary"
-        id="registerButton"
-        type="button"
+        <span class="brand-name">
+            Boletim Carioca
+        </span>
+
+        <span class="brand-city">
+            Rio
+        </span>
+
+    </a>
+
+
+    <!-- USUÁRIO DESLOGADO -->
+
+    <div
+        class="auth-area logged-out"
+        id="loggedOutArea"
     >
-        Criar conta
-    </button>
+
+        <button
+            class="auth-button"
+            id="loginButton"
+            type="button"
+        >
+            Entrar
+        </button>
+
+
+        <button
+            class="auth-button primary"
+            id="registerButton"
+            type="button"
+        >
+            Criar conta
+        </button>
+
+    </div>
+
+
+    <!-- USUÁRIO LOGADO -->
+
+    <div
+        class="auth-area logged-in"
+        id="loggedInArea"
+    >
+
+        <span
+            class="user-name"
+            id="userName"
+        ></span>
+
+
+        <button
+            class="auth-button"
+            id="logoutButton"
+            type="button"
+        >
+            Sair
+        </button>
+
+    </div>
 
 </div>
+```
+
+</header>
+
+<main>
+
+```
+<section class="hero">
+
+    <div class="eyebrow">
+        Boletim Carioca
+    </div>
 
 
-<div class="auth-area logged-in" id="loggedInArea">
-
-    <span
-        class="user-name"
-        id="userName"
-    ></span>
-
-    <button
-        class="auth-button"
-        id="logoutButton"
-        type="button"
-    >
-        Sair
-    </button>
-
-</div>
-
-        </div>
-
-    </header>
+    <h1>
+        O Rio,
+        <span>em pauta.</span>
+    </h1>
 
 
-    <main>
+    <p class="hero-text">
+        Informação, acontecimentos e histórias do Rio de Janeiro,
+        apresentados com clareza, contexto e personalidade.
+    </p>
 
-        <section class="hero">
-
-            <div class="eyebrow">
-                Boletim Carioca
-            </div>
-
-            <h1>
-                O Rio,
-                <span>em pauta.</span>
-            </h1>
-
-            <p class="hero-text">
-                Informação, acontecimentos e histórias do Rio de Janeiro,
-                apresentados com clareza, contexto e personalidade.
-            </p>
-
-        </section>
+</section>
 
 
-        <div class="divider"></div>
+
+<div class="divider"></div>
 
 
-        <section class="intro">
 
-            <div>
+<section class="intro">
 
-                <h2>
-                    Um novo jornal digital carioca.
-                </h2>
+    <div>
 
-            </div>
+        <h2>
+            Um novo jornal digital carioca.
+        </h2>
+
+    </div>
 
 
-            <div>
+    <div>
 
-                <p>
-                    Esta é a primeira versão do Boletim Carioca.
-                    A partir daqui construiremos, passo a passo,
-                    o jornal completo: notícias, autores, comentários,
-                    contas de usuários, painel editorial e muito mais.
-                </p>
+        <p>
+            Esta é a primeira versão do Boletim Carioca.
+            A partir daqui construiremos, passo a passo,
+            o jornal completo: notícias, autores, comentários,
+            contas de usuários, painel editorial e muito mais.
+        </p>
 
-            </div>
+    </div>
 
-        </section>
+</section>
 
-<!-- ============================================================
+
+
+<!-- ========================================================
      PAINEL EDITORIAL
-     ============================================================ -->
+     ======================================================== -->
 
 <section
     class="editorial-panel"
@@ -154,42 +178,45 @@
 
     <div class="divider"></div>
 
+
     <div class="editorial-header">
 
         <div>
+
             <div class="eyebrow">
                 Área editorial
             </div>
 
             <h2>
-                Painel Editorial
+                Painel de notícias
             </h2>
 
-            <p id="editorialRole">
-                Gerencie suas notícias.
-            </p>
+            <p
+                id="editorialRole"
+                class="editorial-role"
+            ></p>
+
         </div>
 
-        <button
-            class="auth-button primary"
-            id="newArticleButton"
-            type="button"
-        >
-            + Nova notícia
-        </button>
+
+        <div>
+
+            <button
+                class="auth-button primary"
+                id="newArticleButton"
+                type="button"
+            >
+                Nova notícia
+            </button>
+
+        </div>
 
     </div>
 
 
     <div
-        class="editorial-message"
-        id="editorialMessage"
-    ></div>
-
-
-    <div
-        class="articles-list"
         id="articlesList"
+        class="articles-list"
     >
 
         <div class="article-loading">
@@ -199,10 +226,11 @@
     </div>
 
 </section>
-        
-    </main>
+```
 
-    <!-- ============================================================
+</main>
+
+<!-- ============================================================
      MODAL DE AUTENTICAÇÃO
      ============================================================ -->
 
@@ -211,213 +239,225 @@
     id="authModal"
 >
 
-    <div class="auth-card">
+```
+<div class="auth-card">
+
+    <button
+        class="auth-close"
+        id="authClose"
+        type="button"
+        aria-label="Fechar"
+    >
+        ×
+    </button>
+
+
+    <h2
+        class="auth-title"
+        id="authTitle"
+    >
+        Entrar
+    </h2>
+
+
+    <p
+        class="auth-subtitle"
+        id="authSubtitle"
+    >
+        Entre para participar das conversas do Boletim Carioca.
+    </p>
+
+
+    <div
+        class="auth-message"
+        id="authMessage"
+    ></div>
+
+
+
+    <!-- LOGIN -->
+
+    <form
+        class="auth-form"
+        id="loginForm"
+    >
+
+        <label
+            class="auth-label"
+            for="loginEmail"
+        >
+            E-mail
+        </label>
+
+
+        <input
+            class="auth-input"
+            id="loginEmail"
+            type="email"
+            autocomplete="email"
+            required
+        >
+
+
+        <label
+            class="auth-label"
+            for="loginPassword"
+        >
+            Senha
+        </label>
+
+
+        <input
+            class="auth-input"
+            id="loginPassword"
+            type="password"
+            autocomplete="current-password"
+            required
+        >
+
 
         <button
-            class="auth-close"
-            id="authClose"
+            class="forgot-password"
+            id="forgotPasswordButton"
             type="button"
-            aria-label="Fechar"
         >
-            ×
+            Esqueci minha senha
         </button>
 
 
-        <h2
-            class="auth-title"
-            id="authTitle"
+        <button
+            class="auth-submit"
+            type="submit"
         >
             Entrar
-        </h2>
+        </button>
+
+    </form>
 
 
-        <p
-            class="auth-subtitle"
-            id="authSubtitle"
+
+    <!-- CADASTRO -->
+
+    <form
+        class="auth-form"
+        id="registerForm"
+        style="display: none;"
+    >
+
+        <label
+            class="auth-label"
+            for="registerName"
         >
-            Entre para participar das conversas do Boletim Carioca.
-        </p>
+            Nome
+        </label>
 
 
-        <div
-            class="auth-message"
-            id="authMessage"
-        ></div>
-
-
-        <!-- LOGIN -->
-
-        <form
-            class="auth-form"
-            id="loginForm"
-        >
-
-            <label
-                class="auth-label"
-                for="loginEmail"
-            >
-                E-mail
-            </label>
-
-            <input
-                class="auth-input"
-                id="loginEmail"
-                type="email"
-                autocomplete="email"
-                required
-            >
-
-
-            <label
-                class="auth-label"
-                for="loginPassword"
-            >
-                Senha
-            </label>
-
-            <input
-                class="auth-input"
-                id="loginPassword"
-                type="password"
-                autocomplete="current-password"
-                required
-            >
-
-
-            <button
-                class="forgot-password"
-                id="forgotPasswordButton"
-                type="button"
-            >
-                Esqueci minha senha
-            </button>
-
-
-            <button
-                class="auth-submit"
-                type="submit"
-            >
-                Entrar
-            </button>
-
-        </form>
-
-
-        <!-- CADASTRO -->
-
-        <form
-            class="auth-form"
-            id="registerForm"
-            style="display: none;"
+        <input
+            class="auth-input"
+            id="registerName"
+            type="text"
+            autocomplete="name"
+            required
         >
 
-            <label
-                class="auth-label"
-                for="registerName"
-            >
-                Nome
-            </label>
 
-            <input
-                class="auth-input"
-                id="registerName"
-                type="text"
-                autocomplete="name"
-                required
-            >
+        <label
+            class="auth-label"
+            for="registerEmail"
+        >
+            E-mail
+        </label>
 
 
-            <label
-                class="auth-label"
-                for="registerEmail"
-            >
-                E-mail
-            </label>
-
-            <input
-                class="auth-input"
-                id="registerEmail"
-                type="email"
-                autocomplete="email"
-                required
-            >
+        <input
+            class="auth-input"
+            id="registerEmail"
+            type="email"
+            autocomplete="email"
+            required
+        >
 
 
-            <label
-                class="auth-label"
-                for="registerPassword"
-            >
-                Senha
-            </label>
-
-            <input
-                class="auth-input"
-                id="registerPassword"
-                type="password"
-                autocomplete="new-password"
-                minlength="6"
-                required
-            >
+        <label
+            class="auth-label"
+            for="registerPassword"
+        >
+            Senha
+        </label>
 
 
-            <button
-                class="auth-submit"
-                type="submit"
-            >
-                Criar minha conta
-            </button>
-
-        </form>
-
-
-        <div class="auth-divider">
-            ou
-        </div>
+        <input
+            class="auth-input"
+            id="registerPassword"
+            type="password"
+            autocomplete="new-password"
+            minlength="6"
+            required
+        >
 
 
         <button
-            class="google-button"
-            id="googleLoginButton"
-            type="button"
+            class="auth-submit"
+            type="submit"
         >
-            Continuar com Google
+            Criar minha conta
         </button>
 
+    </form>
 
-        <div class="auth-switch">
 
-            <span id="authSwitchText">
-                Ainda não possui uma conta?
-            </span>
 
-            <button
-                class="auth-link"
-                id="authSwitchButton"
-                type="button"
-            >
-                Criar conta
-            </button>
+    <div class="auth-divider">
+        ou
+    </div>
 
-        </div>
+
+    <button
+        class="google-button"
+        id="googleLoginButton"
+        type="button"
+    >
+        Continuar com Google
+    </button>
+
+
+    <div class="auth-switch">
+
+        <span id="authSwitchText">
+            Ainda não possui uma conta?
+        </span>
+
+
+        <button
+            class="auth-link"
+            id="authSwitchButton"
+            type="button"
+        >
+            Criar conta
+        </button>
 
     </div>
 
 </div>
+```
 
-    <footer>
+</div>
 
-        BOLETIM CARIOCA · RIO DE JANEIRO
+<footer>
 
-    </footer>
+```
+BOLETIM CARIOCA · RIO DE JANEIRO
+```
 
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- ============================================================
+     SUPABASE
+     ============================================================ -->
 
-<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/supabase.js"></script>
-
-<script src="js/app.js"></script>
+<script src="app.js"></script>
 
 </body>
 
