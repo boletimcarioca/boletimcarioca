@@ -1,17 +1,21 @@
+```javascript
 /*
  * ============================================================
  * BOLETIM CARIOCA
- * AUTENTICAÇÃO
+ * AUTENTICAÇÃO + PAINEL EDITORIAL
  * ============================================================
  */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const authModal = document.getElementById("authModal");
+    const authModal =
+        document.getElementById("authModal");
 
-    const authClose = document.getElementById("authClose");
+    const authClose =
+        document.getElementById("authClose");
 
-    const loginButton = document.getElementById("loginButton");
+    const loginButton =
+        document.getElementById("loginButton");
 
     const registerButton =
         document.getElementById("registerButton");
@@ -62,11 +66,16 @@ document.addEventListener("DOMContentLoaded", () => {
      * ========================================================
      */
 
-    function showMessage(message, isError = false) {
+    function showMessage(
+        message,
+        isError = false
+    ) {
 
         authMessage.textContent = message;
 
-        authMessage.classList.add("visible");
+        authMessage.classList.add(
+            "visible"
+        );
 
         authMessage.classList.toggle(
             "error",
@@ -86,9 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function openAuthModal(mode = "login") {
+    function openAuthModal(
+        mode = "login"
+    ) {
 
-        authModal.classList.add("visible");
+        authModal.classList.add(
+            "visible"
+        );
 
         hideMessage();
 
@@ -101,16 +114,16 @@ document.addEventListener("DOMContentLoaded", () => {
             showLoginForm();
 
         }
-
     }
 
 
     function closeAuthModal() {
 
-        authModal.classList.remove("visible");
+        authModal.classList.remove(
+            "visible"
+        );
 
         hideMessage();
-
     }
 
 
@@ -120,7 +133,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         registerForm.style.display = "none";
 
-        authTitle.textContent = "Entrar";
+        authTitle.textContent =
+            "Entrar";
 
         authSubtitle.textContent =
             "Entre para participar das conversas do Boletim Carioca.";
@@ -132,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "Criar conta";
 
         hideMessage();
-
     }
 
 
@@ -142,7 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         registerForm.style.display = "flex";
 
-        authTitle.textContent = "Criar conta";
+        authTitle.textContent =
+            "Criar conta";
 
         authSubtitle.textContent =
             "Crie sua conta para comentar nas notícias.";
@@ -154,7 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "Entrar";
 
         hideMessage();
-
     }
 
 
@@ -180,27 +193,28 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             return;
-
         }
 
 
-        const session = data.session;
+        const session =
+            data.session;
 
 
         if (!session) {
 
-            loggedOutArea.style.display = "flex";
+            loggedOutArea.style.display =
+                "flex";
 
             loggedInArea.classList.remove(
                 "visible"
             );
 
             return;
-
         }
 
 
-        loggedOutArea.style.display = "none";
+        loggedOutArea.style.display =
+            "none";
 
         loggedInArea.classList.add(
             "visible"
@@ -216,8 +230,13 @@ document.addEventListener("DOMContentLoaded", () => {
             error: profileError
         } = await supabaseClient
             .from("profiles")
-            .select("display_name, role, is_banned")
-            .eq("id", session.user.id)
+            .select(
+                "display_name, role, is_banned"
+            )
+            .eq(
+                "id",
+                session.user.id
+            )
             .single();
 
 
@@ -232,7 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 session.user.email;
 
             return;
-
         }
 
 
@@ -242,14 +260,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Conta suspensa";
 
             return;
-
         }
 
 
         userName.textContent =
             profile.display_name ||
             session.user.email;
-
     }
 
 
@@ -280,52 +296,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 ).value;
 
 
-            if (!email) {
-
-                showMessage(
-                    "Digite seu e-mail.",
-                    true
-                );
-
-                return;
-
-            }
-
-
-            if (!password) {
-
-                showMessage(
-                    "Digite sua senha.",
-                    true
-                );
-
-                return;
-
-            }
-
-
             const {
                 error
-            } = await supabaseClient.auth.signInWithPassword({
-                email,
-                password
-            });
+            } =
+                await supabaseClient.auth
+                    .signInWithPassword({
+                        email,
+                        password
+                    });
 
 
             if (error) {
 
                 console.error(
-                    "Erro no login:",
+                    "ERRO REAL NO LOGIN:",
                     error
                 );
 
                 showMessage(
-                    "E-mail ou senha incorretos.",
+                    error.message,
                     true
                 );
 
                 return;
-
             }
 
 
@@ -333,6 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             await updateAuthUI();
 
+            await loadEditorialPanel();
         }
     );
 
@@ -371,158 +365,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             /*
-             * ------------------------------------------------
-             * VALIDAÇÕES LOCAIS
-             * ------------------------------------------------
+             * Validação local.
              *
-             * Estas validações acontecem ANTES de qualquer
-             * comunicação com o Supabase.
+             * O Supabase deste projeto está configurado
+             * com mínimo de 6 caracteres.
+             *
+             * A validação deve ocorrer ANTES da requisição.
              */
-
-            if (!name) {
-
-                showMessage(
-                    "Digite seu nome.",
-                    true
-                );
-
-                return;
-
-            }
-
-
-            if (!email) {
-
-                showMessage(
-                    "Digite seu e-mail.",
-                    true
-                );
-
-                return;
-
-            }
-
 
             if (password.length < 6) {
 
                 showMessage(
-                    "A senha precisa ter pelo menos 6 caracteres.",
+                    "A senha deve ter pelo menos 6 caracteres.",
                     true
                 );
 
                 return;
-
             }
 
-
-            /*
-             * ------------------------------------------------
-             * CRIAÇÃO DA CONTA
-             * ------------------------------------------------
-             */
 
             const {
                 data,
                 error
-            } = await supabaseClient.auth.signUp({
+            } =
+                await supabaseClient.auth
+                    .signUp({
 
-                email,
+                        email,
 
-                password,
+                        password,
 
-                options: {
+                        options: {
 
-                    data: {
+                            data: {
+                                full_name: name
+                            }
 
-                        full_name: name
+                        }
 
-                    }
+                    });
 
-                }
-
-            });
-
-
-            /*
-             * ------------------------------------------------
-             * ERRO REAL DO SUPABASE
-             * ------------------------------------------------
-             */
 
             if (error) {
-
-                console.error(
-                    "Erro no cadastro:",
-                    error
-                );
 
                 showMessage(
                     error.message,
                     true
                 );
 
-                return;
-
-            }
-
-
-            /*
-             * ------------------------------------------------
-             * E-MAIL JÁ EXISTENTE
-             * ------------------------------------------------
-             *
-             * Com confirmação de e-mail ativada, o Supabase
-             * pode não retornar um erro explícito quando o
-             * e-mail já existe.
-             *
-             * Nesse caso, identities vem vazio.
-             */
-
-            if (
-                data &&
-                data.user &&
-                Array.isArray(data.user.identities) &&
-                data.user.identities.length === 0
-            ) {
-
-                showMessage(
-                    "Este e-mail já está cadastrado. Faça login ou use a opção de recuperação de senha.",
-                    true
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * ------------------------------------------------
-             * VERIFICAÇÃO DE RESULTADO
-             * ------------------------------------------------
-             */
-
-            if (!data || !data.user) {
-
                 console.error(
-                    "Cadastro sem usuário retornado:",
-                    data
-                );
-
-                showMessage(
-                    "Não foi possível concluir o cadastro.",
-                    true
+                    "ERRO REAL NO CADASTRO:",
+                    error
                 );
 
                 return;
-
             }
 
 
             /*
-             * ------------------------------------------------
-             * CONFIRMAÇÃO DE E-MAIL
-             * ------------------------------------------------
-             *
              * Como a confirmação de e-mail está ativada,
              * normalmente não haverá uma sessão imediatamente.
              */
@@ -536,20 +436,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 registerForm.reset();
 
                 return;
-
             }
 
-
-            /*
-             * ------------------------------------------------
-             * CADASTRO COM LOGIN IMEDIATO
-             * ------------------------------------------------
-             */
 
             closeAuthModal();
 
             await updateAuthUI();
 
+            await loadEditorialPanel();
         }
     );
 
@@ -569,19 +463,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const {
                 error
-            } = await supabaseClient.auth.signInWithOAuth({
+            } =
+                await supabaseClient.auth
+                    .signInWithOAuth({
 
-                provider: "google",
+                        provider: "google",
 
-                options: {
+                        options: {
 
-                    redirectTo:
-                        window.location.origin +
-                        window.location.pathname
+                            redirectTo:
+                                window.location.origin +
+                                window.location.pathname
 
-                }
+                        }
 
-            });
+                    });
 
 
             if (error) {
@@ -591,10 +487,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     true
                 );
 
-                console.error(error);
-
+                console.error(
+                    error
+                );
             }
-
         }
     );
 
@@ -611,7 +507,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const {
                 error
-            } = await supabaseClient.auth.signOut();
+            } =
+                await supabaseClient.auth
+                    .signOut();
 
 
             if (error) {
@@ -622,12 +520,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 return;
-
             }
 
 
             await updateAuthUI();
 
+            await loadEditorialPanel();
         }
     );
 
@@ -656,44 +554,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 return;
-
             }
 
 
             const {
                 error
-            } = await supabaseClient.auth
-                .resetPasswordForEmail(
-                    email,
-                    {
-                        redirectTo:
-                            window.location.origin +
-                            window.location.pathname
-                    }
-                );
+            } =
+                await supabaseClient.auth
+                    .resetPasswordForEmail(
+                        email,
+                        {
+                            redirectTo:
+                                window.location.origin +
+                                window.location.pathname
+                        }
+                    );
 
 
             if (error) {
 
-                console.error(
-                    "Erro na recuperação de senha:",
-                    error
-                );
-
                 showMessage(
-                    error.message,
+                    "Não foi possível enviar o e-mail de recuperação.",
                     true
                 );
 
-                return;
+                console.error(
+                    error
+                );
 
+                return;
             }
 
 
             showMessage(
                 "Enviamos as instruções de recuperação para seu e-mail."
             );
-
         }
     );
 
@@ -727,7 +622,8 @@ document.addEventListener("DOMContentLoaded", () => {
         () => {
 
             if (
-                loginForm.style.display !== "none"
+                loginForm.style.display !==
+                "none"
             ) {
 
                 showRegisterForm();
@@ -784,42 +680,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /*
      * ========================================================
-     * OBSERVAR ALTERAÇÕES DE AUTENTICAÇÃO
-     * ========================================================
-     */
-
-    supabaseClient.auth.onAuthStateChange(
-        async () => {
-
-            await updateAuthUI();
-
-        }
-    );
-
-
-    /*
-     * ========================================================
-     * INICIALIZAÇÃO
-     * ========================================================
-     */
-
-        /*
-     * ========================================================
      * PAINEL EDITORIAL
      * ========================================================
      */
 
     const editorialPanel =
-        document.getElementById("editorialPanel");
+        document.getElementById(
+            "editorialPanel"
+        );
 
     const editorialRole =
-        document.getElementById("editorialRole");
+        document.getElementById(
+            "editorialRole"
+        );
 
     const articlesList =
-        document.getElementById("articlesList");
+        document.getElementById(
+            "articlesList"
+        );
 
     const newArticleButton =
-        document.getElementById("newArticleButton");
+        document.getElementById(
+            "newArticleButton"
+        );
 
 
     async function getCurrentProfile() {
@@ -829,10 +712,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 user
             },
             error: authError
-        } = await supabaseClient.auth.getUser();
+        } =
+            await supabaseClient.auth
+                .getUser();
 
 
-        if (authError || !user) {
+        if (
+            authError ||
+            !user
+        ) {
+
             return {
                 user: null,
                 profile: null
@@ -843,13 +732,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const {
             data: profile,
             error: profileError
-        } = await supabaseClient
-            .from("profiles")
-            .select(
-                "id, display_name, role, is_banned"
-            )
-            .eq("id", user.id)
-            .single();
+        } =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "id, display_name, role, is_banned"
+                )
+                .eq(
+                    "id",
+                    user.id
+                )
+                .single();
 
 
         if (profileError) {
@@ -875,7 +768,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadEditorialPanel() {
 
+        /*
+         * O painel ainda não existe no HTML?
+         *
+         * Nesse caso simplesmente não fazemos nada.
+         * Isso evita quebrar a autenticação caso o HTML
+         * esteja em uma versão anterior.
+         */
+
         if (!editorialPanel) {
+
             return;
         }
 
@@ -883,7 +785,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const {
             user,
             profile
-        } = await getCurrentProfile();
+        } =
+            await getCurrentProfile();
 
 
         if (
@@ -892,7 +795,8 @@ document.addEventListener("DOMContentLoaded", () => {
             profile.is_banned
         ) {
 
-            editorialPanel.style.display = "none";
+            editorialPanel.style.display =
+                "none";
 
             return;
         }
@@ -911,13 +815,15 @@ document.addEventListener("DOMContentLoaded", () => {
             )
         ) {
 
-            editorialPanel.style.display = "none";
+            editorialPanel.style.display =
+                "none";
 
             return;
         }
 
 
-        editorialPanel.style.display = "block";
+        editorialPanel.style.display =
+            "block";
 
 
         editorialRole.textContent =
@@ -927,12 +833,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         await loadArticles(
-            profile.role
+            profile.role,
+            user.id
         );
     }
 
 
-    async function loadArticles(role) {
+    async function loadArticles(
+        role,
+        userId
+    ) {
 
         articlesList.innerHTML = `
             <div class="article-loading">
@@ -941,25 +851,26 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
 
-        let query = supabaseClient
-            .from("articles")
-            .select(
-                `
-                id,
-                author_id,
-                title,
-                slug,
-                status,
-                created_at,
-                updated_at
-                `
-            )
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+        let query =
+            supabaseClient
+                .from("articles")
+                .select(
+                    `
+                    id,
+                    author_id,
+                    title,
+                    slug,
+                    status,
+                    created_at,
+                    updated_at
+                    `
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
 
 
         /*
@@ -967,23 +878,19 @@ document.addEventListener("DOMContentLoaded", () => {
          * busca seus próprios artigos.
          *
          * Editor/SuperAdmin:
-         * busca os artigos que o RLS
-         * permitir.
+         * consulta os artigos que suas políticas
+         * RLS permitirem.
          */
 
-        if (role === "journalist") {
+        if (
+            role === "journalist"
+        ) {
 
-            const {
-                data: {
-                    user
-                }
-            } = await supabaseClient.auth.getUser();
-
-
-            query = query.eq(
-                "author_id",
-                user.id
-            );
+            query =
+                query.eq(
+                    "author_id",
+                    userId
+                );
         }
 
 
@@ -1011,10 +918,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        if (!data || data.length === 0) {
+        if (
+            !data ||
+            data.length === 0
+        ) {
 
             articlesList.innerHTML = `
                 <div class="article-empty">
+
                     <h3>
                         Nenhuma notícia ainda.
                     </h3>
@@ -1023,6 +934,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         Crie sua primeira notícia
                         para começar.
                     </p>
+
                 </div>
             `;
 
@@ -1031,61 +943,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         articlesList.innerHTML =
-            data.map(article => {
+            data.map(
+                (article) => {
 
-                const date =
-                    article.created_at
-                        ? new Date(
-                            article.created_at
-                        ).toLocaleDateString(
-                            "pt-BR"
-                        )
-                        : "";
+                    const date =
+                        article.created_at
+                            ? new Date(
+                                article.created_at
+                            ).toLocaleDateString(
+                                "pt-BR"
+                            )
+                            : "";
 
 
-                return `
-                    <article
-                        class="editorial-article"
-                    >
+                    return `
+                        <article
+                            class="editorial-article"
+                        >
 
-                        <div>
+                            <div>
 
-                            <div
-                                class="article-status"
-                            >
-                                ${article.status}
+                                <div
+                                    class="article-status"
+                                >
+                                    ${escapeHtml(
+                                        article.status ||
+                                        ""
+                                    )}
+                                </div>
+
+                                <h3>
+                                    ${escapeHtml(
+                                        article.title ||
+                                        "Sem título"
+                                    )}
+                                </h3>
+
+                                <p>
+                                    ${escapeHtml(
+                                        date
+                                    )}
+                                </p>
+
                             </div>
 
-                            <h3>
-                                ${escapeHtml(
-                                    article.title ||
-                                    "Sem título"
-                                )}
-                            </h3>
 
-                            <p>
-                                ${date}
-                            </p>
+                            <div>
 
-                        </div>
+                                <button
+                                    class="auth-button"
+                                    type="button"
+                                    data-article-id="${article.id}"
+                                >
+                                    Editar
+                                </button>
 
+                            </div>
 
-                        <div>
-
-                            <button
-                                class="auth-button"
-                                type="button"
-                                data-article-id="${article.id}"
-                            >
-                                Editar
-                            </button>
-
-                        </div>
-
-                    </article>
-                `;
-
-            }).join("");
+                        </article>
+                    `;
+                }
+            ).join("");
 
 
         console.log(
@@ -1095,25 +1013,94 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function escapeHtml(value) {
+    function escapeHtml(
+        value
+    ) {
 
         return String(value)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
+            .replaceAll(
+                "&",
+                "&amp;"
+            )
+            .replaceAll(
+                "<",
+                "&lt;"
+            )
+            .replaceAll(
+                ">",
+                "&gt;"
+            )
+            .replaceAll(
+                '"',
+                "&quot;"
+            )
+            .replaceAll(
+                "'",
+                "&#039;"
+            );
     }
+
+
+    /*
+     * ========================================================
+     * BOTÃO NOVA NOTÍCIA
+     * ========================================================
+     *
+     * Nesta etapa o botão ainda não abre o editor.
+     * Vamos implementar o editor de notícias na próxima etapa.
+     */
+
+    if (newArticleButton) {
+
+        newArticleButton.addEventListener(
+            "click",
+            () => {
+
+                console.log(
+                    "NOVA NOTÍCIA — editor será implementado na próxima etapa."
+                );
+
+            }
+        );
+    }
+
+
+    /*
+     * ========================================================
+     * OBSERVAR ALTERAÇÕES DE AUTENTICAÇÃO
+     * ========================================================
+     */
+
+    supabaseClient.auth.onAuthStateChange(
+        async () => {
+
+            await updateAuthUI();
+
+            await loadEditorialPanel();
+        }
+    );
 
 
     /*
      * ========================================================
      * INICIALIZAÇÃO
      * ========================================================
+     *
+     * IMPORTANTE:
+     * Não usamos "await" aqui.
+     *
+     * O callback DOMContentLoaded não é async.
+     * Usar await neste ponto provocaria:
+     *
+     * "await is only valid in async functions"
+     *
+     * que foi justamente o erro que interrompeu
+     * todo o app.js.
      */
 
-    await updateAuthUI();
+    updateAuthUI();
 
-    await loadEditorialPanel();
+    loadEditorialPanel();
 
 });
+```
