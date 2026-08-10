@@ -1,11 +1,52 @@
 /*
  * BOLETIM CARIOCA
  * Aplicação principal
- *
- * Este arquivo será ampliado progressivamente
- * durante a construção do projeto.
  */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+
     console.log("Boletim Carioca iniciado.");
+
+    try {
+
+        const {
+            data: {
+                session
+            },
+            error
+        } = await supabaseClient.auth.getSession();
+
+        if (error) {
+            console.error(
+                "Erro ao verificar sessão:",
+                error
+            );
+
+            return;
+        }
+
+        if (session) {
+
+            console.log(
+                "Usuário autenticado:",
+                session.user.email
+            );
+
+        } else {
+
+            console.log(
+                "Nenhum usuário autenticado."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao iniciar aplicação:",
+            error
+        );
+
+    }
+
 });
