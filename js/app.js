@@ -290,16 +290,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (error) {
 
-                showMessage(
-                    "Não foi possível entrar. Verifique seu e-mail e senha.",
-                    true
-                );
+    console.error(
+        "ERRO REAL NO LOGIN:",
+        error
+    );
 
-                console.error(error);
+    showMessage(
+        error.message,
+        true
+    );
 
-                return;
+    return;
 
-            }
+}
 
 
             closeAuthModal();
