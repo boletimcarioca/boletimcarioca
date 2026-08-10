@@ -280,6 +280,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 ).value;
 
 
+            if (!email) {
+
+                showMessage(
+                    "Digite seu e-mail.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            if (!password) {
+
+                showMessage(
+                    "Digite sua senha.",
+                    true
+                );
+
+                return;
+
+            }
+
+
             const {
                 error
             } = await supabaseClient.auth.signInWithPassword({
@@ -290,19 +314,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (error) {
 
-    console.error(
-        "ERRO REAL NO LOGIN:",
-        error
-    );
+                console.error(
+                    "Erro no login:",
+                    error
+                );
 
-    showMessage(
-        error.message,
-        true
-    );
+                showMessage(
+                    "E-mail ou senha incorretos.",
+                    true
+                );
 
-    return;
+                return;
 
-}
+            }
 
 
             closeAuthModal();
@@ -346,6 +370,57 @@ document.addEventListener("DOMContentLoaded", () => {
                 ).value;
 
 
+            /*
+             * ------------------------------------------------
+             * VALIDAÇÕES LOCAIS
+             * ------------------------------------------------
+             *
+             * Estas validações acontecem ANTES de qualquer
+             * comunicação com o Supabase.
+             */
+
+            if (!name) {
+
+                showMessage(
+                    "Digite seu nome.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            if (!email) {
+
+                showMessage(
+                    "Digite seu e-mail.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            if (password.length < 6) {
+
+                showMessage(
+                    "A senha precisa ter pelo menos 6 caracteres.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * ------------------------------------------------
+             * CRIAÇÃO DA CONTA
+             * ------------------------------------------------
+             */
+
             const {
                 data,
                 error
@@ -368,14 +443,23 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
 
+            /*
+             * ------------------------------------------------
+             * ERRO REAL DO SUPABASE
+             * ------------------------------------------------
+             */
+
             if (error) {
+
+                console.error(
+                    "Erro no cadastro:",
+                    error
+                );
 
                 showMessage(
                     error.message,
                     true
                 );
-
-                console.error(error);
 
                 return;
 
@@ -383,6 +467,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             /*
+             * ------------------------------------------------
+             * E-MAIL JÁ EXISTENTE
+             * ------------------------------------------------
+             *
+             * Com confirmação de e-mail ativada, o Supabase
+             * pode não retornar um erro explícito quando o
+             * e-mail já existe.
+             *
+             * Nesse caso, identities vem vazio.
+             */
+
+            if (
+                data &&
+                data.user &&
+                Array.isArray(data.user.identities) &&
+                data.user.identities.length === 0
+            ) {
+
+                showMessage(
+                    "Este e-mail já está cadastrado. Faça login ou use a opção de recuperação de senha.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * ------------------------------------------------
+             * VERIFICAÇÃO DE RESULTADO
+             * ------------------------------------------------
+             */
+
+            if (!data || !data.user) {
+
+                console.error(
+                    "Cadastro sem usuário retornado:",
+                    data
+                );
+
+                showMessage(
+                    "Não foi possível concluir o cadastro.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * ------------------------------------------------
+             * CONFIRMAÇÃO DE E-MAIL
+             * ------------------------------------------------
+             *
              * Como a confirmação de e-mail está ativada,
              * normalmente não haverá uma sessão imediatamente.
              */
@@ -399,6 +539,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
+
+            /*
+             * ------------------------------------------------
+             * CADASTRO COM LOGIN IMEDIATO
+             * ------------------------------------------------
+             */
 
             closeAuthModal();
 
@@ -529,12 +675,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (error) {
 
-                showMessage(
-                    "Não foi possível enviar o e-mail de recuperação.",
-                    true
+                console.error(
+                    "Erro na recuperação de senha:",
+                    error
                 );
 
-                console.error(error);
+                showMessage(
+                    error.message,
+                    true
+                );
 
                 return;
 
