@@ -144,6 +144,207 @@
 
     </main>
 
+    <!-- ============================================================
+     MODAL DE AUTENTICAÇÃO
+     ============================================================ -->
+
+<div
+    class="auth-modal"
+    id="authModal"
+>
+
+    <div class="auth-card">
+
+        <button
+            class="auth-close"
+            id="authClose"
+            type="button"
+            aria-label="Fechar"
+        >
+            ×
+        </button>
+
+
+        <h2
+            class="auth-title"
+            id="authTitle"
+        >
+            Entrar
+        </h2>
+
+
+        <p
+            class="auth-subtitle"
+            id="authSubtitle"
+        >
+            Entre para participar das conversas do Boletim Carioca.
+        </p>
+
+
+        <div
+            class="auth-message"
+            id="authMessage"
+        ></div>
+
+
+        <!-- LOGIN -->
+
+        <form
+            class="auth-form"
+            id="loginForm"
+        >
+
+            <label
+                class="auth-label"
+                for="loginEmail"
+            >
+                E-mail
+            </label>
+
+            <input
+                class="auth-input"
+                id="loginEmail"
+                type="email"
+                autocomplete="email"
+                required
+            >
+
+
+            <label
+                class="auth-label"
+                for="loginPassword"
+            >
+                Senha
+            </label>
+
+            <input
+                class="auth-input"
+                id="loginPassword"
+                type="password"
+                autocomplete="current-password"
+                required
+            >
+
+
+            <button
+                class="forgot-password"
+                id="forgotPasswordButton"
+                type="button"
+            >
+                Esqueci minha senha
+            </button>
+
+
+            <button
+                class="auth-submit"
+                type="submit"
+            >
+                Entrar
+            </button>
+
+        </form>
+
+
+        <!-- CADASTRO -->
+
+        <form
+            class="auth-form"
+            id="registerForm"
+            style="display: none;"
+        >
+
+            <label
+                class="auth-label"
+                for="registerName"
+            >
+                Nome
+            </label>
+
+            <input
+                class="auth-input"
+                id="registerName"
+                type="text"
+                autocomplete="name"
+                required
+            >
+
+
+            <label
+                class="auth-label"
+                for="registerEmail"
+            >
+                E-mail
+            </label>
+
+            <input
+                class="auth-input"
+                id="registerEmail"
+                type="email"
+                autocomplete="email"
+                required
+            >
+
+
+            <label
+                class="auth-label"
+                for="registerPassword"
+            >
+                Senha
+            </label>
+
+            <input
+                class="auth-input"
+                id="registerPassword"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+            >
+
+
+            <button
+                class="auth-submit"
+                type="submit"
+            >
+                Criar minha conta
+            </button>
+
+        </form>
+
+
+        <div class="auth-divider">
+            ou
+        </div>
+
+
+        <button
+            class="google-button"
+            id="googleLoginButton"
+            type="button"
+        >
+            Continuar com Google
+        </button>
+
+
+        <div class="auth-switch">
+
+            <span id="authSwitchText">
+                Ainda não possui uma conta?
+            </span>
+
+            <button
+                class="auth-link"
+                id="authSwitchButton"
+                type="button"
+            >
+                Criar conta
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
     <footer>
 
