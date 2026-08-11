@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -32,569 +33,595 @@
 
 <body>
 
-<div class="admin-app">
+<!-- =====================================================
+     SIDEBAR
+     ===================================================== -->
+
+<aside
+    class="admin-sidebar"
+    id="adminSidebar"
+>
+
+    <div class="admin-brand">
+
+        <a
+            href="../"
+            class="admin-brand-link"
+        >
+
+            <span class="admin-brand-name">
+                Boletim Carioca
+            </span>
+
+            <span class="admin-brand-label">
+                Painel Editorial
+            </span>
+
+        </a>
+
+    </div>
 
 
-    <!-- =====================================================
-         SIDEBAR
-         ===================================================== -->
-
-    <aside
-        class="admin-sidebar"
-        id="adminSidebar"
+    <nav
+        class="admin-navigation"
+        aria-label="Navegação administrativa"
     >
 
-        <div class="admin-brand">
-
-            <a
-                href="../"
-                class="admin-brand-link"
-            >
-
-                <span class="admin-brand-name">
-                    Boletim Carioca
-                </span>
-
-                <span class="admin-brand-label">
-                    Painel Editorial
-                </span>
-
-            </a>
-
-        </div>
-
-
-        <nav
-            class="admin-navigation"
-            aria-label="Navegação administrativa"
+        <button
+            class="admin-nav-item active"
+            type="button"
+            data-section="dashboard"
         >
+            <span>Dashboard</span>
+        </button>
 
-            <button
-                class="admin-nav-item active"
-                type="button"
-                data-section="dashboard"
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="articles"
+        >
+            <span>Notícias</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="new-article"
+        >
+            <span>Nova notícia</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="categories"
+        >
+            <span>Categorias</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="users"
+            id="usersNavItem"
+            hidden
+        >
+            <span>Usuários</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="profile"
+        >
+            <span>Minha conta</span>
+        </button>
+
+    </nav>
+
+
+    <div class="admin-sidebar-bottom">
+
+        <a
+            href="../"
+            class="admin-back-link"
+        >
+            ← Voltar ao site
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     ÁREA PRINCIPAL
+     ===================================================== -->
+
+<main class="admin-main">
+
+
+    <!-- =================================================
+         HEADER
+         ================================================= -->
+
+    <header class="admin-header">
+
+        <button
+            class="admin-mobile-menu"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Abrir menu"
+        >
+            ☰
+        </button>
+
+
+        <div class="admin-header-title">
+
+            <span
+                class="admin-eyebrow"
+                id="headerEyebrow"
             >
-                <span>Dashboard</span>
-            </button>
+                PAINEL EDITORIAL
+            </span>
 
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="articles"
-            >
-                <span>Notícias</span>
-            </button>
-
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="new-article"
-            >
-                <span>Nova notícia</span>
-            </button>
-
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="categories"
-            >
-                <span>Categorias</span>
-            </button>
-
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="users"
-                id="usersNavItem"
-                hidden
-            >
-                <span>Usuários</span>
-            </button>
-
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="profile"
-            >
-                <span>Minha conta</span>
-            </button>
-
-        </nav>
-
-
-        <div class="admin-sidebar-bottom">
-
-            <a
-                href="../"
-                class="admin-back-link"
-            >
-                ← Voltar ao site
-            </a>
+            <h1 id="pageTitle">
+                Dashboard
+            </h1>
 
         </div>
 
-    </aside>
 
+        <div class="admin-user-area">
 
-    <!-- =====================================================
-         ÁREA PRINCIPAL
-         ===================================================== -->
+            <div class="admin-user-info">
 
-    <main class="admin-main">
+                <strong id="headerUserName">
+                    —
+                </strong>
 
-
-        <!-- =================================================
-             HEADER
-             ================================================= -->
-
-        <header class="admin-header">
-
-            <button
-                class="admin-mobile-menu"
-                id="mobileMenuButton"
-                type="button"
-                aria-label="Abrir menu"
-            >
-                ☰
-            </button>
-
-
-            <div class="admin-header-title">
-
-                <span
-                    class="admin-eyebrow"
-                    id="headerEyebrow"
-                >
-                    PAINEL EDITORIAL
+                <span id="headerUserRole">
+                    —
                 </span>
 
-                <h1 id="pageTitle">
-                    Dashboard
-                </h1>
+            </div>
+
+
+            <button
+                class="admin-logout-button"
+                id="logoutButton"
+                type="button"
+            >
+                Sair
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         MENSAGENS
+         ================================================= -->
+
+    <div
+        class="admin-global-message"
+        id="globalMessage"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =================================================
+         DASHBOARD
+         ================================================= -->
+
+    <section
+        class="admin-section active"
+        id="section-dashboard"
+        data-section-panel="dashboard"
+    >
+
+        <div class="section-introduction">
+
+            <div>
+
+                <span class="section-kicker">
+                    VISÃO GERAL
+                </span>
+
+                <h2>
+                    Seu painel editorial.
+                </h2>
+
+                <p id="dashboardGreeting">
+                    Carregando informações...
+                </p>
 
             </div>
 
 
-            <div class="admin-user-area">
+            <button
+                class="admin-primary-button"
+                type="button"
+                data-open-section="new-article"
+            >
+                + Nova notícia
+            </button>
 
-                <div class="admin-user-info">
+        </div>
 
-                    <strong
-                        id="headerUserName"
-                    >
-                        —
-                    </strong>
-
-                    <span
-                        id="headerUserRole"
-                    >
-                        —
-                    </span>
-
-                </div>
-
-
-                <button
-                    class="admin-logout-button"
-                    id="logoutButton"
-                    type="button"
-                >
-                    Sair
-                </button>
-
-            </div>
-
-        </header>
-
-
-        <!-- =================================================
-             MENSAGENS
-             ================================================= -->
 
         <div
-            class="admin-global-message"
-            id="globalMessage"
-            role="status"
-            aria-live="polite"
-        ></div>
-
-
-        <!-- =================================================
-             DASHBOARD
-             ================================================= -->
-
-        <section
-            class="admin-section active"
-            id="section-dashboard"
-            data-section-panel="dashboard"
+            class="dashboard-cards"
+            id="dashboardCards"
         >
 
-            <div class="section-introduction">
+            <article class="dashboard-card">
 
-                <div>
+                <span>
+                    Total de notícias
+                </span>
 
-                    <span class="section-kicker">
-                        VISÃO GERAL
-                    </span>
+                <strong id="statTotal">
+                    —
+                </strong>
 
-                    <h2>
-                        Seu painel editorial.
-                    </h2>
+            </article>
 
-                    <p id="dashboardGreeting">
-                        Carregando informações...
-                    </p>
+
+            <article class="dashboard-card">
+
+                <span>
+                    Rascunhos
+                </span>
+
+                <strong id="statDrafts">
+                    —
+                </strong>
+
+            </article>
+
+
+            <article class="dashboard-card">
+
+                <span>
+                    Publicadas
+                </span>
+
+                <strong id="statPublished">
+                    —
+                </strong>
+
+            </article>
+
+
+            <article class="dashboard-card">
+
+                <span>
+                    Arquivadas
+                </span>
+
+                <strong id="statArchived">
+                    —
+                </strong>
+
+            </article>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+            <article class="admin-panel-card">
+
+                <div class="panel-card-header">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            RECENTES
+                        </span>
+
+                        <h3>
+                            Notícias recentes
+                        </h3>
+
+                    </div>
+
+
+                    <button
+                        class="admin-text-button"
+                        type="button"
+                        data-open-section="articles"
+                    >
+                        Ver todas
+                    </button>
 
                 </div>
 
 
-                <button
-                    class="admin-primary-button"
-                    type="button"
-                    data-open-section="new-article"
+                <div
+                    id="recentArticles"
+                    class="recent-articles"
                 >
-                    + Nova notícia
-                </button>
+                    Carregando...
+                </div>
 
-            </div>
-
-
-            <div
-                class="dashboard-cards"
-                id="dashboardCards"
-            >
-
-                <article class="dashboard-card">
-
-                    <span>
-                        Total de notícias
-                    </span>
-
-                    <strong id="statTotal">
-                        —
-                    </strong>
-
-                </article>
+            </article>
 
 
-                <article class="dashboard-card">
+            <article class="admin-panel-card">
 
-                    <span>
-                        Rascunhos
-                    </span>
+                <div class="panel-card-header">
 
-                    <strong id="statDrafts">
-                        —
-                    </strong>
+                    <div>
 
-                </article>
+                        <span class="section-kicker">
+                            ACESSO
+                        </span>
 
-
-                <article class="dashboard-card">
-
-                    <span>
-                        Publicadas
-                    </span>
-
-                    <strong id="statPublished">
-                        —
-                    </strong>
-
-                </article>
-
-
-                <article class="dashboard-card">
-
-                    <span>
-                        Arquivadas
-                    </span>
-
-                    <strong id="statArchived">
-                        —
-                    </strong>
-
-                </article>
-
-            </div>
-
-
-            <div class="dashboard-grid">
-
-                <article class="admin-panel-card">
-
-                    <div class="panel-card-header">
-
-                        <div>
-
-                            <span class="section-kicker">
-                                RECENTES
-                            </span>
-
-                            <h3>
-                                Notícias recentes
-                            </h3>
-
-                        </div>
-
-
-                        <button
-                            class="admin-text-button"
-                            type="button"
-                            data-open-section="articles"
-                        >
-                            Ver todas
-                        </button>
+                        <h3>
+                            Sua função
+                        </h3>
 
                     </div>
 
+                </div>
+
+
+                <div class="role-summary">
 
                     <div
-                        id="recentArticles"
-                        class="recent-articles"
+                        class="role-badge"
+                        id="dashboardRoleBadge"
                     >
-                        Carregando...
+                        —
                     </div>
 
-                </article>
-
-
-                <article class="admin-panel-card">
-
-                    <div class="panel-card-header">
-
-                        <div>
-
-                            <span class="section-kicker">
-                                ACESSO
-                            </span>
-
-                            <h3>
-                                Sua função
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="role-summary">
-
-                        <div
-                            class="role-badge"
-                            id="dashboardRoleBadge"
-                        >
-                            —
-                        </div>
-
-                        <p id="dashboardRoleDescription">
-                            —
-                        </p>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             NOTÍCIAS
-             ================================================= -->
-
-        <section
-            class="admin-section"
-            id="section-articles"
-            data-section-panel="articles"
-        >
-
-            <div class="section-introduction">
-
-                <div>
-
-                    <span class="section-kicker">
-                        REDAÇÃO
-                    </span>
-
-                    <h2>
-                        Notícias
-                    </h2>
-
-                    <p id="articlesDescription">
-                        Gerencie suas notícias.
+                    <p id="dashboardRoleDescription">
+                        —
                     </p>
 
                 </div>
 
+            </article>
 
-                <button
-                    class="admin-primary-button"
-                    type="button"
-                    data-open-section="new-article"
-                >
-                    + Nova notícia
-                </button>
+        </div>
 
-            </div>
+    </section>
 
 
-            <div class="article-toolbar">
+    <!-- =================================================
+         NOTÍCIAS
+         ================================================= -->
 
-                <div class="article-filters">
+    <section
+        class="admin-section"
+        id="section-articles"
+        data-section-panel="articles"
+    >
 
-                    <label>
-                        Status
+        <div class="section-introduction">
 
-                        <select
-                            id="articleStatusFilter"
-                        >
+            <div>
 
-                            <option value="all">
-                                Todos
-                            </option>
+                <span class="section-kicker">
+                    REDAÇÃO
+                </span>
 
-                            <option value="draft">
-                                Rascunhos
-                            </option>
+                <h2>
+                    Notícias
+                </h2>
 
-                            <option value="published">
-                                Publicadas
-                            </option>
-
-                            <option value="archived">
-                                Arquivadas
-                            </option>
-
-                        </select>
-
-                    </label>
-
-
-                    <label id="articleAuthorFilterWrap">
-
-                        Autor
-
-                        <select
-                            id="articleAuthorFilter"
-                        >
-
-                            <option value="all">
-                                Todos
-                            </option>
-
-                        </select>
-
-                    </label>
-
-                </div>
-
-
-                <button
-                    class="admin-secondary-button"
-                    id="refreshArticlesButton"
-                    type="button"
-                >
-                    Atualizar
-                </button>
+                <p id="articlesDescription">
+                    Gerencie suas notícias.
+                </p>
 
             </div>
 
 
-            <div
-                class="articles-table-container"
+            <button
+                class="admin-primary-button"
+                type="button"
+                data-open-section="new-article"
             >
+                + Nova notícia
+            </button>
 
-                <table class="articles-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Título
-                            </th>
-
-                            <th>
-                                Autor
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Data
-                            </th>
-
-                            <th>
-                                Ações
-                            </th>
-
-                        </tr>
-
-                    </thead>
+        </div>
 
 
-                    <tbody
-                        id="adminArticlesTableBody"
+        <div class="article-toolbar">
+
+            <div class="article-filters">
+
+                <label>
+
+                    Status
+
+                    <select
+                        id="articleStatusFilter"
                     >
 
-                        <tr>
+                        <option value="all">
+                            Todos
+                        </option>
 
-                            <td
-                                colspan="5"
-                                class="table-loading"
-                            >
-                                Carregando notícias...
-                            </td>
+                        <option value="draft">
+                            Rascunhos
+                        </option>
 
-                        </tr>
+                        <option value="published">
+                            Publicadas
+                        </option>
 
-                    </tbody>
+                        <option value="archived">
+                            Arquivadas
+                        </option>
 
-                </table>
+                    </select>
+
+                </label>
+
+
+                <label id="articleAuthorFilterWrap">
+
+                    Autor
+
+                    <select
+                        id="articleAuthorFilter"
+                    >
+
+                        <option value="all">
+                            Todos
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    Categoria
+
+                    <select
+                        id="articleCategoryFilter"
+                    >
+
+                        <option value="all">
+                            Todas
+                        </option>
+
+                    </select>
+
+                </label>
 
             </div>
 
-        </section>
+
+            <button
+                class="admin-secondary-button"
+                id="refreshArticlesButton"
+                type="button"
+            >
+                Atualizar
+            </button>
+
+        </div>
 
 
-        <!-- =================================================
-             NOVA / EDITAR NOTÍCIA
-             ================================================= -->
+        <div class="articles-table-container">
 
-        <section
-            class="admin-section"
-            id="section-new-article"
-            data-section-panel="new-article"
-        >
+            <table class="articles-table">
 
-            <div class="section-introduction">
+                <thead>
 
-                <div>
+                    <tr>
 
-                    <span
-                        class="section-kicker"
-                        id="articleFormKicker"
-                    >
-                        REDAÇÃO
-                    </span>
+                        <th>
+                            Título
+                        </th>
 
-                    <h2 id="articleFormTitle">
-                        Nova notícia
-                    </h2>
+                        <th>
+                            Autor
+                        </th>
 
-                    <p>
-                        Escreva, salve e gerencie sua notícia.
-                    </p>
+                        <th>
+                            Categoria
+                        </th>
 
-                </div>
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Data
+                        </th>
+
+                        <th>
+                            Ações
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="adminArticlesTableBody"
+                >
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="table-loading"
+                        >
+                            Carregando notícias...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         NOVA / EDITAR NOTÍCIA
+         ================================================= -->
+
+    <section
+        class="admin-section"
+        id="section-new-article"
+        data-section-panel="new-article"
+    >
+
+        <div class="section-introduction">
+
+            <div>
+
+                <span
+                    class="section-kicker"
+                    id="articleFormKicker"
+                >
+                    REDAÇÃO
+                </span>
+
+                <h2 id="articleFormTitle">
+                    Nova notícia
+                </h2>
+
+                <p>
+                    Escreva, salve e gerencie sua notícia.
+                </p>
+
+            </div>
+
+
+            <div class="article-editor-header-actions">
+
+                <a
+                    href="#"
+                    class="admin-secondary-button"
+                    id="articlePreviewLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Visualizar notícia
+                </a>
 
 
                 <button
@@ -607,385 +634,60 @@
 
             </div>
 
+        </div>
 
-            <form
-                class="article-editor-form"
-                id="articleForm"
-            >
 
-                <input
-                    type="hidden"
-                    id="editingArticleId"
-                >
-
-
-                <div class="article-editor-layout">
-
-
-                    <div class="article-editor-main">
-
-
-                        <div class="admin-panel-card">
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Título *
-                                </span>
-
-                                <input
-                                    id="articleTitle"
-                                    type="text"
-                                    required
-                                    maxlength="300"
-                                    placeholder="Título da notícia"
-                                >
-
-                            </label>
-
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Subtítulo
-                                </span>
-
-                                <input
-                                    id="articleSubtitle"
-                                    type="text"
-                                    maxlength="500"
-                                    placeholder="Subtítulo ou linha fina"
-                                >
-
-                            </label>
-
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Slug *
-                                </span>
-
-                                <input
-                                    id="articleSlug"
-                                    type="text"
-                                    required
-                                    maxlength="300"
-                                    placeholder="titulo-da-noticia"
-                                >
-
-                                <small>
-                                    Usado no endereço da notícia.
-                                </small>
-
-                            </label>
-
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Resumo
-                                </span>
-
-                                <textarea
-                                    id="articleExcerpt"
-                                    rows="4"
-                                    maxlength="1000"
-                                    placeholder="Resumo da notícia"
-                                ></textarea>
-
-                            </label>
-
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Conteúdo *
-                                </span>
-
-                                <textarea
-                                    id="articleContent"
-                                    rows="18"
-                                    required
-                                    placeholder="Escreva o conteúdo da notícia..."
-                                ></textarea>
-
-                                <small>
-                                    Nesta primeira versão, o conteúdo será armazenado como JSON estruturado.
-                                </small>
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="admin-panel-card">
-
-                            <div class="panel-card-header">
-
-                                <div>
-
-                                    <span class="section-kicker">
-                                        IMAGEM
-                                    </span>
-
-                                    <h3>
-                                        Imagem de destaque
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    URL da imagem
-                                </span>
-
-                                <input
-                                    id="articleImageUrl"
-                                    type="url"
-                                    placeholder="https://..."
-                                >
-
-                            </label>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    Texto alternativo
-                                </span>
-
-                                <input
-                                    id="articleImageAlt"
-                                    type="text"
-                                    maxlength="500"
-                                    placeholder="Descrição da imagem"
-                                >
-
-                            </label>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    Legenda
-                                </span>
-
-                                <input
-                                    id="articleImageCaption"
-                                    type="text"
-                                    maxlength="500"
-                                    placeholder="Legenda da imagem"
-                                >
-
-                            </label>
-
-                        </div>
-
-                    </div>
-
-
-                    <aside class="article-editor-sidebar">
-
-
-                        <div class="admin-panel-card">
-
-                            <div class="panel-card-header">
-
-                                <div>
-
-                                    <span class="section-kicker">
-                                        PUBLICAÇÃO
-                                    </span>
-
-                                    <h3>
-                                        Configurações
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    Categoria
-                                </span>
-
-                                <select
-                                    id="articleCategory"
-                                >
-
-                                    <option value="">
-                                        Sem categoria
-                                    </option>
-
-                                </select>
-
-                            </label>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    Status
-                                </span>
-
-                                <select
-                                    id="articleStatus"
-                                >
-
-                                    <option value="draft">
-                                        Rascunho
-                                    </option>
-
-                                    <option value="published">
-                                        Publicado
-                                    </option>
-
-                                    <option value="archived">
-                                        Arquivado
-                                    </option>
-
-                                </select>
-
-                            </label>
-
-
-                            <div
-                                class="article-publish-info"
-                                id="articlePublishInfo"
-                            ></div>
-
-
-                            <button
-                                class="admin-primary-button full-width"
-                                type="submit"
-                            >
-                                Salvar notícia
-                            </button>
-
-
-                            <button
-                                class="admin-secondary-button full-width"
-                                type="button"
-                                id="cancelArticleButton"
-                            >
-                                Cancelar
-                            </button>
-
-                        </div>
-
-
-                        <div class="admin-panel-card">
-
-                            <span class="section-kicker">
-                                AUTORIA
-                            </span>
-
-                            <h3 id="articleAuthorDisplay">
-                                —
-                            </h3>
-
-                            <p>
-                                O autor é definido automaticamente pela conta autenticada.
-                            </p>
-
-                        </div>
-
-                    </aside>
-
-                </div>
-
-            </form>
-
-        </section>
-
-
-        <!-- =================================================
-             CATEGORIAS
-             ================================================= -->
-
-        <section
-            class="admin-section"
-            id="section-categories"
-            data-section-panel="categories"
+        <form
+            class="article-editor-form"
+            id="articleForm"
         >
 
-            <div class="section-introduction">
-
-                <div>
-
-                    <span class="section-kicker">
-                        ORGANIZAÇÃO
-                    </span>
-
-                    <h2>
-                        Categorias
-                    </h2>
-
-                    <p>
-                        Organize as notícias do Boletim Carioca.
-                    </p>
-
-                </div>
-
-            </div>
+            <input
+                type="hidden"
+                id="editingArticleId"
+            >
 
 
-            <div class="categories-layout">
+            <div class="article-editor-layout">
 
 
-                <div class="admin-panel-card">
-
-                    <div class="panel-card-header">
-
-                        <div>
-
-                            <span class="section-kicker">
-                                NOVA CATEGORIA
-                            </span>
-
-                            <h3>
-                                Criar categoria
-                            </h3>
-
-                        </div>
-
-                    </div>
+                <div class="article-editor-main">
 
 
-                    <form
-                        id="categoryForm"
-                        class="category-form"
-                    >
+                    <!-- =================================
+                         DADOS PRINCIPAIS
+                         ================================= -->
+
+                    <div class="admin-panel-card">
 
                         <label class="form-field">
 
                             <span>
-                                Nome *
+                                Título *
                             </span>
 
                             <input
-                                id="categoryName"
+                                id="articleTitle"
                                 type="text"
                                 required
-                                maxlength="150"
+                                maxlength="300"
+                                placeholder="Título da notícia"
+                            >
+
+                        </label>
+
+
+                        <label class="form-field">
+
+                            <span>
+                                Subtítulo
+                            </span>
+
+                            <input
+                                id="articleSubtitle"
+                                type="text"
+                                maxlength="500"
+                                placeholder="Subtítulo ou linha fina"
                             >
 
                         </label>
@@ -998,11 +700,16 @@
                             </span>
 
                             <input
-                                id="categorySlug"
+                                id="articleSlug"
                                 type="text"
                                 required
-                                maxlength="150"
+                                maxlength="300"
+                                placeholder="titulo-da-noticia"
                             >
+
+                            <small>
+                                Usado no endereço público da notícia.
+                            </small>
 
                         </label>
 
@@ -1010,300 +717,1234 @@
                         <label class="form-field">
 
                             <span>
-                                Descrição
+                                Resumo
                             </span>
 
                             <textarea
-                                id="categoryDescription"
+                                id="articleExcerpt"
                                 rows="4"
+                                maxlength="1000"
+                                placeholder="Resumo da notícia"
                             ></textarea>
 
                         </label>
 
+                    </div>
 
-                        <button
-                            class="admin-primary-button"
-                            type="submit"
-                            id="categorySaveButton"
+
+                    <!-- =================================
+                         EDITOR DE TEXTO RICO
+                         ================================= -->
+
+                    <div class="admin-panel-card article-rich-editor-card">
+
+                        <div class="panel-card-header">
+
+                            <div>
+
+                                <span class="section-kicker">
+                                    REDAÇÃO
+                                </span>
+
+                                <h3>
+                                    Conteúdo
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="rich-editor"
+                            id="richEditor"
                         >
-                            Criar categoria
-                        </button>
-
-                    </form>
-
-                </div>
 
 
-                <div class="admin-panel-card">
+                            <!-- =============================
+                                 BARRA DE FERRAMENTAS
+                                 ============================= -->
 
-                    <div class="panel-card-header">
+                            <div
+                                class="rich-editor-toolbar"
+                                id="richEditorToolbar"
+                                role="toolbar"
+                                aria-label="Ferramentas de edição"
+                            >
 
-                        <div>
 
-                            <span class="section-kicker">
-                                CATEGORIAS
-                            </span>
+                                <div class="editor-toolbar-group">
 
-                            <h3>
-                                Existentes
-                            </h3>
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="undo"
+                                        title="Desfazer"
+                                        aria-label="Desfazer"
+                                    >
+                                        ↶
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="redo"
+                                        title="Refazer"
+                                        aria-label="Refazer"
+                                    >
+                                        ↷
+                                    </button>
+
+                                </div>
+
+
+                                <div class="editor-toolbar-group">
+
+                                    <select
+                                        id="editorBlockFormat"
+                                        class="editor-format-select"
+                                        aria-label="Formato do texto"
+                                    >
+
+                                        <option value="p">
+                                            Parágrafo
+                                        </option>
+
+                                        <option value="h2">
+                                            Título 2
+                                        </option>
+
+                                        <option value="h3">
+                                            Título 3
+                                        </option>
+
+                                        <option value="h4">
+                                            Título 4
+                                        </option>
+
+                                        <option value="blockquote">
+                                            Citação
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="editor-toolbar-group">
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="bold"
+                                        title="Negrito"
+                                        aria-label="Negrito"
+                                    >
+                                        <strong>B</strong>
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="italic"
+                                        title="Itálico"
+                                        aria-label="Itálico"
+                                    >
+                                        <em>I</em>
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="underline"
+                                        title="Sublinhado"
+                                        aria-label="Sublinhado"
+                                    >
+                                        <u>U</u>
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="strikeThrough"
+                                        title="Tachado"
+                                        aria-label="Tachado"
+                                    >
+                                        <s>S</s>
+                                    </button>
+
+                                </div>
+
+
+                                <div class="editor-toolbar-group">
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="insertUnorderedList"
+                                        title="Lista"
+                                        aria-label="Lista"
+                                    >
+                                        •
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="insertOrderedList"
+                                        title="Lista numerada"
+                                        aria-label="Lista numerada"
+                                    >
+                                        1.
+                                    </button>
+
+                                </div>
+
+
+                                <div class="editor-toolbar-group">
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="justifyLeft"
+                                        title="Alinhar à esquerda"
+                                        aria-label="Alinhar à esquerda"
+                                    >
+                                        ≡
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="justifyCenter"
+                                        title="Centralizar"
+                                        aria-label="Centralizar"
+                                    >
+                                        ≡
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="justifyRight"
+                                        title="Alinhar à direita"
+                                        aria-label="Alinhar à direita"
+                                    >
+                                        ≡
+                                    </button>
+
+                                </div>
+
+
+                                <div class="editor-toolbar-group">
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        id="insertLinkButton"
+                                        title="Inserir link"
+                                        aria-label="Inserir link"
+                                    >
+                                        🔗
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        id="removeLinkButton"
+                                        title="Remover link"
+                                        aria-label="Remover link"
+                                    >
+                                        ⛓
+                                    </button>
+
+                                </div>
+
+
+                                <div class="editor-toolbar-group">
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        id="insertImageButton"
+                                        title="Inserir imagem"
+                                        aria-label="Inserir imagem"
+                                    >
+                                        🖼
+                                    </button>
+
+                                </div>
+
+
+                                <div class="editor-toolbar-group">
+
+                                    <button
+                                        type="button"
+                                        class="editor-tool-button"
+                                        data-command="removeFormat"
+                                        title="Limpar formatação"
+                                        aria-label="Limpar formatação"
+                                    >
+                                        Tx
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =============================
+                                 ÁREA EDITÁVEL
+                                 ============================= -->
+
+                            <div
+                                id="articleEditor"
+                                class="rich-editor-content"
+                                contenteditable="true"
+                                role="textbox"
+                                aria-multiline="true"
+                                aria-label="Conteúdo da notícia"
+                                data-placeholder="Escreva o conteúdo da notícia..."
+                            ></div>
+
+
+                            <!-- =============================
+                                 CAMPO DE COMPATIBILIDADE
+                                 ============================= -->
+
+                            <textarea
+                                id="articleContent"
+                                name="articleContent"
+                                hidden
+                            ></textarea>
+
+
+                            <!-- =============================
+                                 INFORMAÇÃO
+                                 ============================= -->
+
+                            <div class="rich-editor-footer">
+
+                                <span>
+                                    O conteúdo será armazenado no campo JSONB da notícia.
+                                </span>
+
+                                <span id="articleWordCount">
+                                    0 palavras
+                                </span>
+
+                            </div>
 
                         </div>
 
                     </div>
 
 
-                    <div
-                        id="categoriesList"
-                        class="categories-list"
-                    >
-                        Carregando...
+                    <!-- =================================
+                         IMAGEM DE DESTAQUE
+                         ================================= -->
+
+                    <div class="admin-panel-card">
+
+                        <div class="panel-card-header">
+
+                            <div>
+
+                                <span class="section-kicker">
+                                    IMAGEM
+                                </span>
+
+                                <h3>
+                                    Imagem de destaque
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="form-field">
+
+                            <span>
+                                URL da imagem
+                            </span>
+
+                            <input
+                                id="articleImageUrl"
+                                type="url"
+                                placeholder="https://..."
+                            >
+
+                            <small>
+                                Você também poderá enviar uma imagem diretamente para o armazenamento do Supabase.
+                            </small>
+
+                        </label>
+
+
+                        <div class="image-upload-divider">
+
+                            <span>
+                                ou
+                            </span>
+
+                        </div>
+
+
+                        <label class="form-field">
+
+                            <span>
+                                Enviar imagem
+                            </span>
+
+                            <input
+                                id="articleImageFile"
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp,image/gif"
+                            >
+
+                            <small>
+                                JPG, PNG, WebP ou GIF.
+                            </small>
+
+                        </label>
+
+
+                        <div
+                            id="articleImageUploadStatus"
+                            class="upload-status"
+                            aria-live="polite"
+                        ></div>
+
+
+                        <div
+                            id="articleFeaturedImagePreview"
+                            class="featured-image-preview"
+                            hidden
+                        >
+
+                            <img
+                                id="articleFeaturedImagePreviewImage"
+                                src=""
+                                alt=""
+                            >
+
+                        </div>
+
+
+                        <label class="form-field">
+
+                            <span>
+                                Texto alternativo
+                            </span>
+
+                            <input
+                                id="articleImageAlt"
+                                type="text"
+                                maxlength="500"
+                                placeholder="Descrição da imagem"
+                            >
+
+                        </label>
+
+
+                        <label class="form-field">
+
+                            <span>
+                                Legenda
+                            </span>
+
+                            <input
+                                id="articleImageCaption"
+                                type="text"
+                                maxlength="500"
+                                placeholder="Legenda da imagem"
+                            >
+
+                        </label>
+
                     </div>
 
                 </div>
 
+
+                <!-- =====================================
+                     SIDEBAR DO EDITOR
+                     ===================================== -->
+
+                <aside class="article-editor-sidebar">
+
+
+                    <!-- =================================
+                         PUBLICAÇÃO
+                         ================================= -->
+
+                    <div class="admin-panel-card">
+
+                        <div class="panel-card-header">
+
+                            <div>
+
+                                <span class="section-kicker">
+                                    PUBLICAÇÃO
+                                </span>
+
+                                <h3>
+                                    Configurações
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="form-field">
+
+                            <span>
+                                Categoria
+                            </span>
+
+                            <select
+                                id="articleCategory"
+                            >
+
+                                <option value="">
+                                    Sem categoria
+                                </option>
+
+                            </select>
+
+                        </label>
+
+
+                        <label class="form-field">
+
+                            <span>
+                                Status
+                            </span>
+
+                            <select
+                                id="articleStatus"
+                            >
+
+                                <option value="draft">
+                                    Rascunho
+                                </option>
+
+                                <option value="published">
+                                    Publicado
+                                </option>
+
+                                <option value="archived">
+                                    Arquivado
+                                </option>
+
+                            </select>
+
+                        </label>
+
+
+                        <div
+                            class="article-publish-info"
+                            id="articlePublishInfo"
+                        ></div>
+
+
+                        <a
+                            href="#"
+                            class="admin-secondary-button full-width"
+                            id="articlePreviewLinkSidebar"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Visualizar como visitante
+                        </a>
+
+
+                        <button
+                            class="admin-primary-button full-width"
+                            type="submit"
+                            id="saveArticleButton"
+                        >
+                            Salvar notícia
+                        </button>
+
+
+                        <button
+                            class="admin-secondary-button full-width"
+                            type="button"
+                            id="cancelArticleButton"
+                        >
+                            Cancelar
+                        </button>
+
+
+                        <button
+                            class="admin-danger-button full-width"
+                            type="button"
+                            id="deleteArticleButton"
+                            hidden
+                        >
+                            Apagar notícia
+                        </button>
+
+                    </div>
+
+
+                    <!-- =================================
+                         AUTORIA
+                         ================================= -->
+
+                    <div class="admin-panel-card">
+
+                        <span class="section-kicker">
+                            AUTORIA
+                        </span>
+
+                        <h3 id="articleAuthorDisplay">
+                            —
+                        </h3>
+
+                        <p>
+                            O autor é definido automaticamente pela conta autenticada.
+                        </p>
+
+                    </div>
+
+
+                    <!-- =================================
+                         ENDEREÇO PÚBLICO
+                         ================================= -->
+
+                    <div class="admin-panel-card">
+
+                        <span class="section-kicker">
+                            ENDEREÇO PÚBLICO
+                        </span>
+
+                        <h3>
+                            URL da notícia
+                        </h3>
+
+                        <a
+                            href="#"
+                            id="articlePublicUrl"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            —
+                        </a>
+
+                    </div>
+
+                </aside>
+
             </div>
 
-        </section>
+        </form>
+
+    </section>
 
 
-        <!-- =================================================
-             USUÁRIOS — SUPERADMIN
-             ================================================= -->
+    <!-- =================================================
+         CATEGORIAS
+         ================================================= -->
 
-        <section
-            class="admin-section"
-            id="section-users"
-            data-section-panel="users"
-        >
+    <section
+        class="admin-section"
+        id="section-categories"
+        data-section-panel="categories"
+    >
 
-            <div class="section-introduction">
+        <div class="section-introduction">
 
-                <div>
+            <div>
 
-                    <span class="section-kicker">
-                        ADMINISTRAÇÃO
-                    </span>
+                <span class="section-kicker">
+                    ORGANIZAÇÃO
+                </span>
 
-                    <h2>
-                        Usuários
-                    </h2>
-
-                    <p>
-                        Gerenciamento das contas do Boletim Carioca.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="admin-warning-card">
-
-                <strong>
-                    Área exclusiva do superadmin
-                </strong>
+                <h2>
+                    Categorias
+                </h2>
 
                 <p>
-                    As alterações administrativas de função e suspensão serão implementadas através de funções seguras no banco de dados. A interface não contorna as políticas RLS.
+                    Organize as notícias do Boletim Carioca.
                 </p>
 
             </div>
 
+        </div>
 
-            <div class="users-toolbar">
 
-                <button
-                    class="admin-secondary-button"
-                    id="refreshUsersButton"
-                    type="button"
+        <div class="categories-layout">
+
+
+            <div class="admin-panel-card">
+
+                <div class="panel-card-header">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            NOVA CATEGORIA
+                        </span>
+
+                        <h3>
+                            Criar categoria
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <form
+                    id="categoryForm"
+                    class="category-form"
                 >
-                    Atualizar usuários
-                </button>
+
+                    <label class="form-field">
+
+                        <span>
+                            Nome *
+                        </span>
+
+                        <input
+                            id="categoryName"
+                            type="text"
+                            required
+                            maxlength="150"
+                        >
+
+                    </label>
+
+
+                    <label class="form-field">
+
+                        <span>
+                            Slug *
+                        </span>
+
+                        <input
+                            id="categorySlug"
+                            type="text"
+                            required
+                            maxlength="150"
+                        >
+
+                    </label>
+
+
+                    <label class="form-field">
+
+                        <span>
+                            Descrição
+                        </span>
+
+                        <textarea
+                            id="categoryDescription"
+                            rows="4"
+                        ></textarea>
+
+                    </label>
+
+
+                    <button
+                        class="admin-primary-button"
+                        type="submit"
+                        id="categorySaveButton"
+                    >
+                        Criar categoria
+                    </button>
+
+                </form>
 
             </div>
 
 
-            <div class="articles-table-container">
+            <div class="admin-panel-card">
 
-                <table class="articles-table">
+                <div class="panel-card-header">
 
-                    <thead>
+                    <div>
 
-                        <tr>
+                        <span class="section-kicker">
+                            CATEGORIAS
+                        </span>
 
-                            <th>
-                                Usuário
-                            </th>
+                        <h3>
+                            Existentes
+                        </h3>
 
-                            <th>
-                                Função
-                            </th>
+                    </div>
 
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Criado em
-                            </th>
-
-                            <th>
-                                Ações
-                            </th>
-
-                        </tr>
-
-                    </thead>
+                </div>
 
 
-                    <tbody
-                        id="usersTableBody"
+                <div
+                    id="categoriesList"
+                    class="categories-list"
+                >
+                    Carregando...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         USUÁRIOS — SUPERADMIN
+         ================================================= -->
+
+    <section
+        class="admin-section"
+        id="section-users"
+        data-section-panel="users"
+    >
+
+        <div class="section-introduction">
+
+            <div>
+
+                <span class="section-kicker">
+                    ADMINISTRAÇÃO
+                </span>
+
+                <h2>
+                    Usuários
+                </h2>
+
+                <p>
+                    Gerenciamento das contas do Boletim Carioca.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-warning-card">
+
+            <strong>
+                Área exclusiva do superadmin
+            </strong>
+
+            <p>
+                As alterações administrativas de função e suspensão serão realizadas através de operações seguras no banco de dados. A interface não contorna as políticas RLS.
+            </p>
+
+        </div>
+
+
+        <div class="users-toolbar">
+
+            <button
+                class="admin-secondary-button"
+                id="refreshUsersButton"
+                type="button"
+            >
+                Atualizar usuários
+            </button>
+
+        </div>
+
+
+        <div class="articles-table-container">
+
+            <table class="articles-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Usuário
+                        </th>
+
+                        <th>
+                            Função
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Criado em
+                        </th>
+
+                        <th>
+                            Ações
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="usersTableBody"
+                >
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="table-loading"
+                        >
+                            Carregando usuários...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PERFIL
+         ================================================= -->
+
+    <section
+        class="admin-section"
+        id="section-profile"
+        data-section-panel="profile"
+    >
+
+        <div class="section-introduction">
+
+            <div>
+
+                <span class="section-kicker">
+                    CONTA
+                </span>
+
+                <h2>
+                    Minha conta
+                </h2>
+
+                <p>
+                    Gerencie seus dados pessoais e de acesso.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-layout">
+
+
+            <!-- =========================================
+                 RESUMO DO PERFIL
+                 ========================================= -->
+
+            <div class="admin-panel-card">
+
+                <div class="profile-avatar">
+
+                    <img
+                        id="profileAvatarImage"
+                        src=""
+                        alt=""
+                        hidden
                     >
 
-                        <tr>
-
-                            <td
-                                colspan="5"
-                                class="table-loading"
-                            >
-                                Carregando usuários...
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             PERFIL
-             ================================================= -->
-
-        <section
-            class="admin-section"
-            id="section-profile"
-            data-section-panel="profile"
-        >
-
-            <div class="section-introduction">
-
-                <div>
-
-                    <span class="section-kicker">
-                        CONTA
+                    <span id="profileInitial">
+                        —
                     </span>
 
-                    <h2>
-                        Minha conta
-                    </h2>
+                </div>
 
-                    <p>
-                        Informações do seu perfil editorial.
-                    </p>
 
+                <h3 id="profileDisplayName">
+                    —
+                </h3>
+
+
+                <p id="profileEmail">
+                    —
+                </p>
+
+
+                <div
+                    class="role-badge"
+                    id="profileRole"
+                >
+                    —
+                </div>
+
+
+                <div
+                    class="profile-account-status"
+                    id="profileAccountStatus"
+                >
+                    —
                 </div>
 
             </div>
 
 
-            <div class="profile-layout">
+            <!-- =========================================
+                 DADOS PÚBLICOS
+                 ========================================= -->
 
-                <div class="admin-panel-card">
+            <div class="admin-panel-card">
 
-                    <div class="profile-avatar">
-                        <span id="profileInitial">
-                            —
+                <div class="panel-card-header">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            PERFIL PÚBLICO
                         </span>
-                    </div>
 
-                    <h3 id="profileDisplayName">
-                        —
-                    </h3>
+                        <h3>
+                            Informações do perfil
+                        </h3>
 
-                    <p id="profileEmail">
-                        —
-                    </p>
-
-                    <div
-                        class="role-badge"
-                        id="profileRole"
-                    >
-                        —
                     </div>
 
                 </div>
 
 
-                <div class="admin-panel-card">
+                <form id="profileForm">
 
-                    <form id="profileForm">
+                    <label class="form-field">
 
-                        <label class="form-field">
+                        <span>
+                            Nome de exibição
+                        </span>
 
-                            <span>
-                                Nome de exibição
-                            </span>
-
-                            <input
-                                id="profileNameInput"
-                                type="text"
-                                maxlength="200"
-                            >
-
-                        </label>
-
-
-                        <label class="form-field">
-
-                            <span>
-                                URL do avatar
-                            </span>
-
-                            <input
-                                id="profileAvatarInput"
-                                type="url"
-                            >
-
-                        </label>
-
-
-                        <button
-                            class="admin-primary-button"
-                            type="submit"
+                        <input
+                            id="profileNameInput"
+                            type="text"
+                            maxlength="200"
                         >
-                            Salvar perfil
-                        </button>
 
-                    </form>
+                    </label>
 
-                </div>
+
+                    <label class="form-field">
+
+                        <span>
+                            URL do avatar
+                        </span>
+
+                        <input
+                            id="profileAvatarInput"
+                            type="url"
+                            placeholder="https://..."
+                        >
+
+                    </label>
+
+
+                    <button
+                        class="admin-primary-button"
+                        type="submit"
+                        id="saveProfileButton"
+                    >
+                        Salvar perfil
+                    </button>
+
+                </form>
 
             </div>
 
-        </section>
 
-    </main>
+            <!-- =========================================
+                 E-MAIL
+                 ========================================= -->
 
-</div>
+            <div class="admin-panel-card">
+
+                <div class="panel-card-header">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            E-MAIL
+                        </span>
+
+                        <h3>
+                            Alterar e-mail
+                        </h3>
+
+                    </div>
+
+                </div>
 
 
-<!-- =========================================================
+                <form id="emailForm">
+
+                    <label class="form-field">
+
+                        <span>
+                            E-mail atual
+                        </span>
+
+                        <input
+                            id="currentEmail"
+                            type="email"
+                            readonly
+                        >
+
+                    </label>
+
+
+                    <label class="form-field">
+
+                        <span>
+                            Novo e-mail
+                        </span>
+
+                        <input
+                            id="newEmail"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="novo@email.com"
+                        >
+
+                    </label>
+
+
+                    <p class="form-help">
+                        Dependendo da configuração de autenticação do Supabase, será necessário confirmar o novo endereço por e-mail.
+                    </p>
+
+
+                    <button
+                        class="admin-primary-button"
+                        type="submit"
+                        id="changeEmailButton"
+                    >
+                        Alterar e-mail
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- =========================================
+                 SENHA
+                 ========================================= -->
+
+            <div class="admin-panel-card">
+
+                <div class="panel-card-header">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            SEGURANÇA
+                        </span>
+
+                        <h3>
+                            Alterar senha
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <form id="passwordForm">
+
+                    <label class="form-field">
+
+                        <span>
+                            Nova senha
+                        </span>
+
+                        <input
+                            id="newPassword"
+                            type="password"
+                            minlength="6"
+                            autocomplete="new-password"
+                            placeholder="Mínimo de 6 caracteres"
+                        >
+
+                    </label>
+
+
+                    <label class="form-field">
+
+                        <span>
+                            Confirmar nova senha
+                        </span>
+
+                        <input
+                            id="confirmNewPassword"
+                            type="password"
+                            minlength="6"
+                            autocomplete="new-password"
+                            placeholder="Repita a nova senha"
+                        >
+
+                    </label>
+
+
+                    <button
+                        class="admin-primary-button"
+                        type="submit"
+                        id="changePasswordButton"
+                    >
+                        Alterar senha
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
      MODAL DE CONFIRMAÇÃO
-     ========================================================= -->
+     ===================================================== -->
 
 <div
     class="admin-modal"
     id="confirmationModal"
     aria-hidden="true"
+    hidden
 >
 
-    <div class="admin-modal-card">
+    <div
+        class="admin-modal-overlay"
+        data-confirmation-close
+    ></div>
+
+
+    <div
+        class="admin-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirmationTitle"
+    >
 
         <button
             class="admin-modal-close"
@@ -1314,13 +1955,16 @@
             ×
         </button>
 
+
         <h2 id="confirmationTitle">
             Confirmar ação
         </h2>
 
+
         <p id="confirmationMessage">
             Tem certeza?
         </p>
+
 
         <div class="admin-modal-actions">
 
@@ -1331,6 +1975,7 @@
             >
                 Cancelar
             </button>
+
 
             <button
                 class="admin-danger-button"
@@ -1347,14 +1992,312 @@
 </div>
 
 
-<!-- =========================================================
+<!-- =====================================================
+     MODAL — LINK
+     ===================================================== -->
+
+<div
+    class="admin-modal"
+    id="linkModal"
+    aria-hidden="true"
+    hidden
+>
+
+    <div
+        class="admin-modal-overlay"
+        data-link-close
+    ></div>
+
+
+    <div
+        class="admin-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="linkModalTitle"
+    >
+
+        <button
+            class="admin-modal-close"
+            id="linkModalClose"
+            type="button"
+            aria-label="Fechar"
+        >
+            ×
+        </button>
+
+
+        <h2 id="linkModalTitle">
+            Inserir link
+        </h2>
+
+
+        <label class="form-field">
+
+            <span>
+                URL
+            </span>
+
+            <input
+                id="linkUrlInput"
+                type="url"
+                placeholder="https://..."
+            >
+
+        </label>
+
+
+        <label class="form-field">
+
+            <span>
+                Texto do link
+            </span>
+
+            <input
+                id="linkTextInput"
+                type="text"
+                placeholder="Texto do link"
+            >
+
+        </label>
+
+
+        <label class="form-checkbox">
+
+            <input
+                id="linkNewWindow"
+                type="checkbox"
+                checked
+            >
+
+            <span>
+                Abrir em nova aba
+            </span>
+
+        </label>
+
+
+        <div class="admin-modal-actions">
+
+            <button
+                class="admin-secondary-button"
+                id="linkCancelButton"
+                type="button"
+            >
+                Cancelar
+            </button>
+
+
+            <button
+                class="admin-primary-button"
+                id="linkConfirmButton"
+                type="button"
+            >
+                Inserir link
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL — IMAGEM
+     ===================================================== -->
+
+<div
+    class="admin-modal"
+    id="imageModal"
+    aria-hidden="true"
+    hidden
+>
+
+    <div
+        class="admin-modal-overlay"
+        data-image-close
+    ></div>
+
+
+    <div
+        class="admin-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="imageModalTitle"
+    >
+
+        <button
+            class="admin-modal-close"
+            id="imageModalClose"
+            type="button"
+            aria-label="Fechar"
+        >
+            ×
+        </button>
+
+
+        <h2 id="imageModalTitle">
+            Inserir imagem
+        </h2>
+
+
+        <div class="image-source-tabs">
+
+            <button
+                type="button"
+                class="image-source-tab active"
+                id="imageUrlTab"
+                data-image-source="url"
+            >
+                Usar URL
+            </button>
+
+
+            <button
+                type="button"
+                class="image-source-tab"
+                id="imageUploadTab"
+                data-image-source="upload"
+            >
+                Enviar imagem
+            </button>
+
+        </div>
+
+
+        <!-- URL -->
+
+        <div
+            id="imageUrlSource"
+            class="image-source-panel"
+        >
+
+            <label class="form-field">
+
+                <span>
+                    URL da imagem
+                </span>
+
+                <input
+                    id="editorImageUrl"
+                    type="url"
+                    placeholder="https://..."
+                >
+
+            </label>
+
+        </div>
+
+
+        <!-- UPLOAD -->
+
+        <div
+            id="imageUploadSource"
+            class="image-source-panel"
+            hidden
+        >
+
+            <label class="form-field">
+
+                <span>
+                    Selecionar imagem
+                </span>
+
+                <input
+                    id="editorImageFile"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                >
+
+            </label>
+
+
+            <div
+                id="editorImageUploadStatus"
+                class="upload-status"
+                aria-live="polite"
+            ></div>
+
+        </div>
+
+
+        <label class="form-field">
+
+            <span>
+                Texto alternativo
+            </span>
+
+            <input
+                id="editorImageAlt"
+                type="text"
+                maxlength="500"
+                placeholder="Descrição da imagem"
+            >
+
+        </label>
+
+
+        <label class="form-field">
+
+            <span>
+                Legenda
+            </span>
+
+            <input
+                id="editorImageCaption"
+                type="text"
+                maxlength="500"
+                placeholder="Legenda da imagem"
+            >
+
+        </label>
+
+
+        <div class="admin-modal-actions">
+
+            <button
+                class="admin-secondary-button"
+                id="imageCancelButton"
+                type="button"
+            >
+                Cancelar
+            </button>
+
+
+            <button
+                class="admin-primary-button"
+                id="imageConfirmButton"
+                type="button"
+            >
+                Inserir imagem
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
      SUPABASE
-     ========================================================= -->
+     ===================================================== -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
 
-<script src="../js/admin.js"></script>
+
+<!-- =====================================================
+     JAVASCRIPT DO PAINEL
+     ===================================================== -->
+
+<script
+    src="../js/admin.js"
+></script>
+
 
 </body>
 
 </html>
+```
