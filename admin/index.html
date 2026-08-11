@@ -1,1357 +1,1100 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <meta
-        name="description"
-        content="Painel editorial do Boletim Carioca."
-    >
+<meta
+    name="description"
+    content="Painel administrativo do Boletim Carioca."
+>
 
-    <meta
-        name="theme-color"
-        content="#f4f0e8"
-    >
+<title>Painel Editorial — Boletim Carioca</title>
 
-    <title>Painel Editorial — Boletim Carioca</title>
-
-    <link
-        rel="stylesheet"
-        href="../css/admin.css"
-    >
+<link
+    rel="stylesheet"
+    href="../css/admin.css"
+>
+```
 
 </head>
 
-
 <body>
 
-<div class="admin-app">
+<div class="admin-app" id="adminApp">
+
+```
+<!-- ======================================================
+     SIDEBAR
+     ====================================================== -->
+
+<aside class="admin-sidebar">
+
+    <div class="admin-brand">
+
+        <a
+            href="../"
+            class="admin-brand-link"
+        >
+            <span class="admin-brand-name">
+                Boletim Carioca
+            </span>
+
+            <span class="admin-brand-label">
+                Painel Editorial
+            </span>
+        </a>
+
+    </div>
 
 
-    <!-- =====================================================
-         SIDEBAR
-         ===================================================== -->
-
-    <aside
-        class="admin-sidebar"
-        id="adminSidebar"
+    <nav
+        class="admin-navigation"
+        aria-label="Navegação administrativa"
     >
 
-        <div class="admin-brand">
+        <button
+            class="admin-nav-item active"
+            type="button"
+            data-section="dashboard"
+        >
+            <span>Dashboard</span>
+        </button>
 
-            <a
-                href="../"
-                class="admin-brand-link"
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="articles"
+        >
+            <span>Notícias</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="newArticle"
+        >
+            <span>Nova notícia</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="drafts"
+        >
+            <span>Rascunhos</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="published"
+        >
+            <span>Publicadas</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="archived"
+        >
+            <span>Arquivadas</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="categories"
+            id="categoriesNavItem"
+        >
+            <span>Categorias</span>
+        </button>
+
+
+        <!-- SOMENTE SUPERADMIN -->
+
+        <button
+            class="admin-nav-item superadmin-only"
+            type="button"
+            data-section="users"
+            id="usersNavItem"
+            hidden
+        >
+            <span>Usuários</span>
+        </button>
+
+
+        <button
+            class="admin-nav-item"
+            type="button"
+            data-section="profile"
+        >
+            <span>Meu perfil</span>
+        </button>
+
+    </nav>
+
+
+    <div class="admin-sidebar-bottom">
+
+        <a
+            href="../"
+            class="admin-public-link"
+        >
+            Ver site público
+        </a>
+
+
+        <button
+            class="admin-logout"
+            id="logoutButton"
+            type="button"
+        >
+            Sair
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- ======================================================
+     ÁREA PRINCIPAL
+     ====================================================== -->
+
+<main class="admin-main">
+
+
+    <!-- HEADER -->
+
+    <header class="admin-header">
+
+        <div>
+
+            <p
+                class="admin-eyebrow"
+                id="adminRole"
             >
+                Painel editorial
+            </p>
 
-                <span class="admin-brand-name">
-                    Boletim Carioca
-                </span>
-
-                <span class="admin-brand-label">
-                    Painel Editorial
-                </span>
-
-            </a>
+            <h1 id="pageTitle">
+                Dashboard
+            </h1>
 
         </div>
 
 
-        <nav
-            class="admin-navigation"
-            aria-label="Navegação administrativa"
-        >
+        <div class="admin-user">
 
-            <button
-                class="admin-nav-item active"
-                type="button"
-                data-section="dashboard"
+            <span
+                class="admin-user-name"
+                id="adminUserName"
             >
-                <span>Dashboard</span>
-            </button>
+                Carregando...
+            </span>
 
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="articles"
-            >
-                <span>Notícias</span>
-            </button>
-
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="new-article"
-            >
-                <span>Nova notícia</span>
-            </button>
-
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="categories"
-            >
-                <span>Categorias</span>
-            </button>
-
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="users"
-                id="usersNavItem"
-                hidden
-            >
-                <span>Usuários</span>
-            </button>
-
-
-            <button
-                class="admin-nav-item"
-                type="button"
-                data-section="profile"
-            >
-                <span>Minha conta</span>
-            </button>
-
-        </nav>
-
-
-        <div class="admin-sidebar-bottom">
-
-            <a
-                href="../"
-                class="admin-back-link"
-            >
-                ← Voltar ao site
-            </a>
+            <span
+                class="admin-user-role"
+                id="adminUserRole"
+            ></span>
 
         </div>
 
-    </aside>
+    </header>
 
 
-    <!-- =====================================================
-         ÁREA PRINCIPAL
-         ===================================================== -->
+    <!-- MENSAGENS -->
 
-    <main class="admin-main">
-
-
-        <!-- =================================================
-             HEADER
-             ================================================= -->
-
-        <header class="admin-header">
-
-            <button
-                class="admin-mobile-menu"
-                id="mobileMenuButton"
-                type="button"
-                aria-label="Abrir menu"
-            >
-                ☰
-            </button>
+    <div
+        class="admin-message"
+        id="adminMessage"
+        aria-live="polite"
+    ></div>
 
 
-            <div class="admin-header-title">
+    <!-- ==================================================
+         DASHBOARD
+         ================================================== -->
 
-                <span
-                    class="admin-eyebrow"
-                    id="headerEyebrow"
-                >
-                    PAINEL EDITORIAL
+    <section
+        class="admin-section active"
+        id="section-dashboard"
+        data-section-panel="dashboard"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Visão geral
                 </span>
 
-                <h1 id="pageTitle">
-                    Dashboard
-                </h1>
+                <h2>
+                    Seu painel editorial
+                </h2>
 
             </div>
 
-
-            <div class="admin-user-area">
-
-                <div class="admin-user-info">
-
-                    <strong
-                        id="headerUserName"
-                    >
-                        —
-                    </strong>
-
-                    <span
-                        id="headerUserRole"
-                    >
-                        —
-                    </span>
-
-                </div>
-
-
-                <button
-                    class="admin-logout-button"
-                    id="logoutButton"
-                    type="button"
-                >
-                    Sair
-                </button>
-
-            </div>
-
-        </header>
-
-
-        <!-- =================================================
-             MENSAGENS
-             ================================================= -->
-
-        <div
-            class="admin-global-message"
-            id="globalMessage"
-            role="status"
-            aria-live="polite"
-        ></div>
-
-
-        <!-- =================================================
-             DASHBOARD
-             ================================================= -->
-
-        <section
-            class="admin-section active"
-            id="section-dashboard"
-            data-section-panel="dashboard"
-        >
-
-            <div class="section-introduction">
-
-                <div>
-
-                    <span class="section-kicker">
-                        VISÃO GERAL
-                    </span>
-
-                    <h2>
-                        Seu painel editorial.
-                    </h2>
-
-                    <p id="dashboardGreeting">
-                        Carregando informações...
-                    </p>
-
-                </div>
-
-
-                <button
-                    class="admin-primary-button"
-                    type="button"
-                    data-open-section="new-article"
-                >
-                    + Nova notícia
-                </button>
-
-            </div>
-
-
-            <div
-                class="dashboard-cards"
-                id="dashboardCards"
+            <button
+                class="admin-button primary"
+                type="button"
+                data-section-target="newArticle"
             >
+                Nova notícia
+            </button>
 
-                <article class="dashboard-card">
-
-                    <span>
-                        Total de notícias
-                    </span>
-
-                    <strong id="statTotal">
-                        —
-                    </strong>
-
-                </article>
+        </div>
 
 
-                <article class="dashboard-card">
+        <div class="stats-grid">
 
-                    <span>
-                        Rascunhos
-                    </span>
+            <article class="stat-card">
 
-                    <strong id="statDrafts">
-                        —
-                    </strong>
+                <span class="stat-label">
+                    Total de notícias
+                </span>
 
-                </article>
-
-
-                <article class="dashboard-card">
-
-                    <span>
-                        Publicadas
-                    </span>
-
-                    <strong id="statPublished">
-                        —
-                    </strong>
-
-                </article>
-
-
-                <article class="dashboard-card">
-
-                    <span>
-                        Arquivadas
-                    </span>
-
-                    <strong id="statArchived">
-                        —
-                    </strong>
-
-                </article>
-
-            </div>
-
-
-            <div class="dashboard-grid">
-
-                <article class="admin-panel-card">
-
-                    <div class="panel-card-header">
-
-                        <div>
-
-                            <span class="section-kicker">
-                                RECENTES
-                            </span>
-
-                            <h3>
-                                Notícias recentes
-                            </h3>
-
-                        </div>
-
-
-                        <button
-                            class="admin-text-button"
-                            type="button"
-                            data-open-section="articles"
-                        >
-                            Ver todas
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        id="recentArticles"
-                        class="recent-articles"
-                    >
-                        Carregando...
-                    </div>
-
-                </article>
-
-
-                <article class="admin-panel-card">
-
-                    <div class="panel-card-header">
-
-                        <div>
-
-                            <span class="section-kicker">
-                                ACESSO
-                            </span>
-
-                            <h3>
-                                Sua função
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="role-summary">
-
-                        <div
-                            class="role-badge"
-                            id="dashboardRoleBadge"
-                        >
-                            —
-                        </div>
-
-                        <p id="dashboardRoleDescription">
-                            —
-                        </p>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             NOTÍCIAS
-             ================================================= -->
-
-        <section
-            class="admin-section"
-            id="section-articles"
-            data-section-panel="articles"
-        >
-
-            <div class="section-introduction">
-
-                <div>
-
-                    <span class="section-kicker">
-                        REDAÇÃO
-                    </span>
-
-                    <h2>
-                        Notícias
-                    </h2>
-
-                    <p id="articlesDescription">
-                        Gerencie suas notícias.
-                    </p>
-
-                </div>
-
-
-                <button
-                    class="admin-primary-button"
-                    type="button"
-                    data-open-section="new-article"
+                <strong
+                    class="stat-value"
+                    id="statTotal"
                 >
-                    + Nova notícia
-                </button>
-
-            </div>
-
-
-            <div class="article-toolbar">
-
-                <div class="article-filters">
-
-                    <label>
-                        Status
-
-                        <select
-                            id="articleStatusFilter"
-                        >
-
-                            <option value="all">
-                                Todos
-                            </option>
-
-                            <option value="draft">
-                                Rascunhos
-                            </option>
-
-                            <option value="published">
-                                Publicadas
-                            </option>
-
-                            <option value="archived">
-                                Arquivadas
-                            </option>
-
-                        </select>
-
-                    </label>
-
-
-                    <label id="articleAuthorFilterWrap">
-
-                        Autor
-
-                        <select
-                            id="articleAuthorFilter"
-                        >
-
-                            <option value="all">
-                                Todos
-                            </option>
-
-                        </select>
-
-                    </label>
-
-                </div>
-
-
-                <button
-                    class="admin-secondary-button"
-                    id="refreshArticlesButton"
-                    type="button"
-                >
-                    Atualizar
-                </button>
-
-            </div>
-
-
-            <div
-                class="articles-table-container"
-            >
-
-                <table class="articles-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Título
-                            </th>
-
-                            <th>
-                                Autor
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Data
-                            </th>
-
-                            <th>
-                                Ações
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody
-                        id="adminArticlesTableBody"
-                    >
-
-                        <tr>
-
-                            <td
-                                colspan="5"
-                                class="table-loading"
-                            >
-                                Carregando notícias...
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             NOVA / EDITAR NOTÍCIA
-             ================================================= -->
-
-        <section
-            class="admin-section"
-            id="section-new-article"
-            data-section-panel="new-article"
-        >
-
-            <div class="section-introduction">
-
-                <div>
-
-                    <span
-                        class="section-kicker"
-                        id="articleFormKicker"
-                    >
-                        REDAÇÃO
-                    </span>
-
-                    <h2 id="articleFormTitle">
-                        Nova notícia
-                    </h2>
-
-                    <p>
-                        Escreva, salve e gerencie sua notícia.
-                    </p>
-
-                </div>
-
-
-                <button
-                    class="admin-secondary-button"
-                    type="button"
-                    data-open-section="articles"
-                >
-                    ← Voltar para notícias
-                </button>
-
-            </div>
-
-
-            <form
-                class="article-editor-form"
-                id="articleForm"
-            >
-
-                <input
-                    type="hidden"
-                    id="editingArticleId"
-                >
-
-
-                <div class="article-editor-layout">
-
-
-                    <div class="article-editor-main">
-
-
-                        <div class="admin-panel-card">
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Título *
-                                </span>
-
-                                <input
-                                    id="articleTitle"
-                                    type="text"
-                                    required
-                                    maxlength="300"
-                                    placeholder="Título da notícia"
-                                >
-
-                            </label>
-
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Subtítulo
-                                </span>
-
-                                <input
-                                    id="articleSubtitle"
-                                    type="text"
-                                    maxlength="500"
-                                    placeholder="Subtítulo ou linha fina"
-                                >
-
-                            </label>
-
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Slug *
-                                </span>
-
-                                <input
-                                    id="articleSlug"
-                                    type="text"
-                                    required
-                                    maxlength="300"
-                                    placeholder="titulo-da-noticia"
-                                >
-
-                                <small>
-                                    Usado no endereço da notícia.
-                                </small>
-
-                            </label>
-
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Resumo
-                                </span>
-
-                                <textarea
-                                    id="articleExcerpt"
-                                    rows="4"
-                                    maxlength="1000"
-                                    placeholder="Resumo da notícia"
-                                ></textarea>
-
-                            </label>
-
-
-                            <label
-                                class="form-field"
-                            >
-
-                                <span>
-                                    Conteúdo *
-                                </span>
-
-                                <textarea
-                                    id="articleContent"
-                                    rows="18"
-                                    required
-                                    placeholder="Escreva o conteúdo da notícia..."
-                                ></textarea>
-
-                                <small>
-                                    Nesta primeira versão, o conteúdo será armazenado como JSON estruturado.
-                                </small>
-
-                            </label>
-
-                        </div>
-
-
-                        <div class="admin-panel-card">
-
-                            <div class="panel-card-header">
-
-                                <div>
-
-                                    <span class="section-kicker">
-                                        IMAGEM
-                                    </span>
-
-                                    <h3>
-                                        Imagem de destaque
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    URL da imagem
-                                </span>
-
-                                <input
-                                    id="articleImageUrl"
-                                    type="url"
-                                    placeholder="https://..."
-                                >
-
-                            </label>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    Texto alternativo
-                                </span>
-
-                                <input
-                                    id="articleImageAlt"
-                                    type="text"
-                                    maxlength="500"
-                                    placeholder="Descrição da imagem"
-                                >
-
-                            </label>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    Legenda
-                                </span>
-
-                                <input
-                                    id="articleImageCaption"
-                                    type="text"
-                                    maxlength="500"
-                                    placeholder="Legenda da imagem"
-                                >
-
-                            </label>
-
-                        </div>
-
-                    </div>
-
-
-                    <aside class="article-editor-sidebar">
-
-
-                        <div class="admin-panel-card">
-
-                            <div class="panel-card-header">
-
-                                <div>
-
-                                    <span class="section-kicker">
-                                        PUBLICAÇÃO
-                                    </span>
-
-                                    <h3>
-                                        Configurações
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    Categoria
-                                </span>
-
-                                <select
-                                    id="articleCategory"
-                                >
-
-                                    <option value="">
-                                        Sem categoria
-                                    </option>
-
-                                </select>
-
-                            </label>
-
-
-                            <label class="form-field">
-
-                                <span>
-                                    Status
-                                </span>
-
-                                <select
-                                    id="articleStatus"
-                                >
-
-                                    <option value="draft">
-                                        Rascunho
-                                    </option>
-
-                                    <option value="published">
-                                        Publicado
-                                    </option>
-
-                                    <option value="archived">
-                                        Arquivado
-                                    </option>
-
-                                </select>
-
-                            </label>
-
-
-                            <div
-                                class="article-publish-info"
-                                id="articlePublishInfo"
-                            ></div>
-
-
-                            <button
-                                class="admin-primary-button full-width"
-                                type="submit"
-                            >
-                                Salvar notícia
-                            </button>
-
-
-                            <button
-                                class="admin-secondary-button full-width"
-                                type="button"
-                                id="cancelArticleButton"
-                            >
-                                Cancelar
-                            </button>
-
-                        </div>
-
-
-                        <div class="admin-panel-card">
-
-                            <span class="section-kicker">
-                                AUTORIA
-                            </span>
-
-                            <h3 id="articleAuthorDisplay">
-                                —
-                            </h3>
-
-                            <p>
-                                O autor é definido automaticamente pela conta autenticada.
-                            </p>
-
-                        </div>
-
-                    </aside>
-
-                </div>
-
-            </form>
-
-        </section>
-
-
-        <!-- =================================================
-             CATEGORIAS
-             ================================================= -->
-
-        <section
-            class="admin-section"
-            id="section-categories"
-            data-section-panel="categories"
-        >
-
-            <div class="section-introduction">
-
-                <div>
-
-                    <span class="section-kicker">
-                        ORGANIZAÇÃO
-                    </span>
-
-                    <h2>
-                        Categorias
-                    </h2>
-
-                    <p>
-                        Organize as notícias do Boletim Carioca.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="categories-layout">
-
-
-                <div class="admin-panel-card">
-
-                    <div class="panel-card-header">
-
-                        <div>
-
-                            <span class="section-kicker">
-                                NOVA CATEGORIA
-                            </span>
-
-                            <h3>
-                                Criar categoria
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-                    <form
-                        id="categoryForm"
-                        class="category-form"
-                    >
-
-                        <label class="form-field">
-
-                            <span>
-                                Nome *
-                            </span>
-
-                            <input
-                                id="categoryName"
-                                type="text"
-                                required
-                                maxlength="150"
-                            >
-
-                        </label>
-
-
-                        <label class="form-field">
-
-                            <span>
-                                Slug *
-                            </span>
-
-                            <input
-                                id="categorySlug"
-                                type="text"
-                                required
-                                maxlength="150"
-                            >
-
-                        </label>
-
-
-                        <label class="form-field">
-
-                            <span>
-                                Descrição
-                            </span>
-
-                            <textarea
-                                id="categoryDescription"
-                                rows="4"
-                            ></textarea>
-
-                        </label>
-
-
-                        <button
-                            class="admin-primary-button"
-                            type="submit"
-                            id="categorySaveButton"
-                        >
-                            Criar categoria
-                        </button>
-
-                    </form>
-
-                </div>
-
-
-                <div class="admin-panel-card">
-
-                    <div class="panel-card-header">
-
-                        <div>
-
-                            <span class="section-kicker">
-                                CATEGORIAS
-                            </span>
-
-                            <h3>
-                                Existentes
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-                    <div
-                        id="categoriesList"
-                        class="categories-list"
-                    >
-                        Carregando...
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             USUÁRIOS — SUPERADMIN
-             ================================================= -->
-
-        <section
-            class="admin-section"
-            id="section-users"
-            data-section-panel="users"
-        >
-
-            <div class="section-introduction">
-
-                <div>
-
-                    <span class="section-kicker">
-                        ADMINISTRAÇÃO
-                    </span>
-
-                    <h2>
-                        Usuários
-                    </h2>
-
-                    <p>
-                        Gerenciamento das contas do Boletim Carioca.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="admin-warning-card">
-
-                <strong>
-                    Área exclusiva do superadmin
+                    —
                 </strong>
 
+            </article>
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Rascunhos
+                </span>
+
+                <strong
+                    class="stat-value"
+                    id="statDrafts"
+                >
+                    —
+                </strong>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Publicadas
+                </span>
+
+                <strong
+                    class="stat-value"
+                    id="statPublished"
+                >
+                    —
+                </strong>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span class="stat-label">
+                    Arquivadas
+                </span>
+
+                <strong
+                    class="stat-value"
+                    id="statArchived"
+                >
+                    —
+                </strong>
+
+            </article>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+            <section class="admin-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            Produção
+                        </span>
+
+                        <h3>
+                            Notícias recentes
+                        </h3>
+
+                    </div>
+
+                    <button
+                        class="text-button"
+                        type="button"
+                        data-section-target="articles"
+                    >
+                        Ver todas
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="recent-articles"
+                    id="recentArticles"
+                >
+
+                    <div class="loading-state">
+                        Carregando...
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="admin-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            Atalhos
+                        </span>
+
+                        <h3>
+                            Ações rápidas
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+                    <button
+                        class="quick-action"
+                        type="button"
+                        data-section-target="newArticle"
+                    >
+                        <strong>
+                            Criar notícia
+                        </strong>
+
+                        <span>
+                            Começar um novo artigo.
+                        </span>
+                    </button>
+
+
+                    <button
+                        class="quick-action"
+                        type="button"
+                        data-section-target="drafts"
+                    >
+                        <strong>
+                            Revisar rascunhos
+                        </strong>
+
+                        <span>
+                            Continuar trabalhos em andamento.
+                        </span>
+                    </button>
+
+
+                    <button
+                        class="quick-action"
+                        type="button"
+                        data-section-target="published"
+                    >
+                        <strong>
+                            Ver publicadas
+                        </strong>
+
+                        <span>
+                            Consultar o conteúdo publicado.
+                        </span>
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         TODAS AS NOTÍCIAS
+         ================================================== -->
+
+    <section
+        class="admin-section"
+        id="section-articles"
+        data-section-panel="articles"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Redação
+                </span>
+
+                <h2>
+                    Notícias
+                </h2>
+
+            </div>
+
+            <button
+                class="admin-button primary"
+                type="button"
+                data-section-target="newArticle"
+            >
+                Nova notícia
+            </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <input
+                class="admin-input"
+                id="articleSearch"
+                type="search"
+                placeholder="Buscar notícia..."
+            >
+
+
+            <select
+                class="admin-select"
+                id="articleStatusFilter"
+            >
+
+                <option value="all">
+                    Todos os status
+                </option>
+
+                <option value="draft">
+                    Rascunhos
+                </option>
+
+                <option value="published">
+                    Publicadas
+                </option>
+
+                <option value="archived">
+                    Arquivadas
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div
+            class="articles-table-container"
+            id="articlesTableContainer"
+        >
+
+            <div class="loading-state">
+                Carregando notícias...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         NOVA NOTÍCIA
+         ================================================== -->
+
+    <section
+        class="admin-section"
+        id="section-newArticle"
+        data-section-panel="newArticle"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Redação
+                </span>
+
+                <h2>
+                    Nova notícia
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <form
+            class="article-editor"
+            id="articleForm"
+        >
+
+            <div class="editor-main">
+
+                <label class="field-label">
+                    Título
+                </label>
+
+                <input
+                    class="admin-input large"
+                    id="articleTitle"
+                    type="text"
+                    required
+                    maxlength="300"
+                    placeholder="Título da notícia"
+                >
+
+
+                <label class="field-label">
+                    Subtítulo
+                </label>
+
+                <input
+                    class="admin-input"
+                    id="articleSubtitle"
+                    type="text"
+                    maxlength="500"
+                    placeholder="Subtítulo opcional"
+                >
+
+
+                <label class="field-label">
+                    Resumo
+                </label>
+
+                <textarea
+                    class="admin-textarea"
+                    id="articleExcerpt"
+                    rows="4"
+                    placeholder="Resumo ou chamada da notícia"
+                ></textarea>
+
+
+                <label class="field-label">
+                    Conteúdo
+                </label>
+
+                <textarea
+                    class="admin-textarea article-content-input"
+                    id="articleContent"
+                    rows="20"
+                    placeholder="Escreva o conteúdo da notícia..."
+                ></textarea>
+
+            </div>
+
+
+            <aside class="editor-sidebar">
+
+                <div class="admin-card">
+
+                    <h3>
+                        Publicação
+                    </h3>
+
+
+                    <label class="field-label">
+                        Status
+                    </label>
+
+                    <select
+                        class="admin-select"
+                        id="articleStatus"
+                    >
+
+                        <option value="draft">
+                            Rascunho
+                        </option>
+
+                        <option value="published">
+                            Publicar
+                        </option>
+
+                    </select>
+
+
+                    <label class="field-label">
+                        Categoria
+                    </label>
+
+                    <select
+                        class="admin-select"
+                        id="articleCategory"
+                    >
+
+                        <option value="">
+                            Sem categoria
+                        </option>
+
+                    </select>
+
+
+                    <label class="field-label">
+                        Slug
+                    </label>
+
+                    <input
+                        class="admin-input"
+                        id="articleSlug"
+                        type="text"
+                        maxlength="300"
+                        placeholder="slug-da-noticia"
+                    >
+
+
+                    <button
+                        class="admin-button primary full"
+                        type="submit"
+                    >
+                        Salvar notícia
+                    </button>
+
+                </div>
+
+
+                <div class="admin-card">
+
+                    <h3>
+                        Imagem destacada
+                    </h3>
+
+
+                    <label class="field-label">
+                        URL da imagem
+                    </label>
+
+                    <input
+                        class="admin-input"
+                        id="articleImageUrl"
+                        type="url"
+                        placeholder="https://..."
+                    >
+
+
+                    <label class="field-label">
+                        Texto alternativo
+                    </label>
+
+                    <input
+                        class="admin-input"
+                        id="articleImageAlt"
+                        type="text"
+                        placeholder="Descrição da imagem"
+                    >
+
+
+                    <label class="field-label">
+                        Legenda
+                    </label>
+
+                    <input
+                        class="admin-input"
+                        id="articleImageCaption"
+                        type="text"
+                        placeholder="Legenda opcional"
+                    >
+
+                </div>
+
+            </aside>
+
+        </form>
+
+    </section>
+
+
+    <!-- ==================================================
+         RASCUNHOS
+         ================================================== -->
+
+    <section
+        class="admin-section"
+        id="section-drafts"
+        data-section-panel="drafts"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Redação
+                </span>
+
+                <h2>
+                    Rascunhos
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="articles-list"
+            id="draftsList"
+        >
+
+            <div class="loading-state">
+                Carregando rascunhos...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         PUBLICADAS
+         ================================================== -->
+
+    <section
+        class="admin-section"
+        id="section-published"
+        data-section-panel="published"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Publicação
+                </span>
+
+                <h2>
+                    Notícias publicadas
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="articles-list"
+            id="publishedList"
+        >
+
+            <div class="loading-state">
+                Carregando publicadas...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         ARQUIVADAS
+         ================================================== -->
+
+    <section
+        class="admin-section"
+        id="section-archived"
+        data-section-panel="archived"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Arquivo
+                </span>
+
+                <h2>
+                    Notícias arquivadas
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="articles-list"
+            id="archivedList"
+        >
+
+            <div class="loading-state">
+                Carregando arquivadas...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         CATEGORIAS
+         ================================================== -->
+
+    <section
+        class="admin-section"
+        id="section-categories"
+        data-section-panel="categories"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Organização
+                </span>
+
+                <h2>
+                    Categorias
+                </h2>
+
+            </div>
+
+            <button
+                class="admin-button primary"
+                id="newCategoryButton"
+                type="button"
+            >
+                Nova categoria
+            </button>
+
+        </div>
+
+
+        <div
+            class="categories-list"
+            id="categoriesList"
+        >
+
+            <div class="loading-state">
+                Carregando categorias...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         USUÁRIOS — SOMENTE SUPERADMIN
+         ================================================== -->
+
+    <section
+        class="admin-section"
+        id="section-users"
+        data-section-panel="users"
+        hidden
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Administração
+                </span>
+
+                <h2>
+                    Usuários
+                </h2>
+
                 <p>
-                    As alterações administrativas de função e suspensão serão implementadas através de funções seguras no banco de dados. A interface não contorna as políticas RLS.
+                    Gerenciamento de contas e permissões.
                 </p>
 
             </div>
 
+        </div>
 
-            <div class="users-toolbar">
+
+        <div class="toolbar">
+
+            <input
+                class="admin-input"
+                id="userSearch"
+                type="search"
+                placeholder="Buscar usuário..."
+            >
+
+        </div>
+
+
+        <div
+            class="users-table-container"
+            id="usersTableContainer"
+        >
+
+            <div class="loading-state">
+                Carregando usuários...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         PERFIL
+         ================================================== -->
+
+    <section
+        class="admin-section"
+        id="section-profile"
+        data-section-panel="profile"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-kicker">
+                    Conta
+                </span>
+
+                <h2>
+                    Meu perfil
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-layout">
+
+            <div class="admin-card">
+
+                <h3>
+                    Informações pessoais
+                </h3>
+
+
+                <label class="field-label">
+                    Nome
+                </label>
+
+                <input
+                    class="admin-input"
+                    id="profileName"
+                    type="text"
+                >
+
+
+                <label class="field-label">
+                    E-mail
+                </label>
+
+                <input
+                    class="admin-input"
+                    id="profileEmail"
+                    type="email"
+                    disabled
+                >
+
+
+                <label class="field-label">
+                    Função
+                </label>
+
+                <input
+                    class="admin-input"
+                    id="profileRole"
+                    type="text"
+                    disabled
+                >
+
 
                 <button
-                    class="admin-secondary-button"
-                    id="refreshUsersButton"
+                    class="admin-button primary"
+                    id="saveProfileButton"
                     type="button"
                 >
-                    Atualizar usuários
+                    Salvar perfil
                 </button>
 
             </div>
 
-
-            <div class="articles-table-container">
-
-                <table class="articles-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Usuário
-                            </th>
-
-                            <th>
-                                Função
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Criado em
-                            </th>
-
-                            <th>
-                                Ações
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody
-                        id="usersTableBody"
-                    >
-
-                        <tr>
-
-                            <td
-                                colspan="5"
-                                class="table-loading"
-                            >
-                                Carregando usuários...
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             PERFIL
-             ================================================= -->
-
-        <section
-            class="admin-section"
-            id="section-profile"
-            data-section-panel="profile"
-        >
-
-            <div class="section-introduction">
-
-                <div>
-
-                    <span class="section-kicker">
-                        CONTA
-                    </span>
-
-                    <h2>
-                        Minha conta
-                    </h2>
-
-                    <p>
-                        Informações do seu perfil editorial.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="profile-layout">
-
-                <div class="admin-panel-card">
-
-                    <div class="profile-avatar">
-                        <span id="profileInitial">
-                            —
-                        </span>
-                    </div>
-
-                    <h3 id="profileDisplayName">
-                        —
-                    </h3>
-
-                    <p id="profileEmail">
-                        —
-                    </p>
-
-                    <div
-                        class="role-badge"
-                        id="profileRole"
-                    >
-                        —
-                    </div>
-
-                </div>
-
-
-                <div class="admin-panel-card">
-
-                    <form id="profileForm">
-
-                        <label class="form-field">
-
-                            <span>
-                                Nome de exibição
-                            </span>
-
-                            <input
-                                id="profileNameInput"
-                                type="text"
-                                maxlength="200"
-                            >
-
-                        </label>
-
-
-                        <label class="form-field">
-
-                            <span>
-                                URL do avatar
-                            </span>
-
-                            <input
-                                id="profileAvatarInput"
-                                type="url"
-                            >
-
-                        </label>
-
-
-                        <button
-                            class="admin-primary-button"
-                            type="submit"
-                        >
-                            Salvar perfil
-                        </button>
-
-                    </form>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-</div>
-
-
-<!-- =========================================================
-     MODAL DE CONFIRMAÇÃO
-     ========================================================= -->
-
-<div
-    class="admin-modal"
-    id="confirmationModal"
-    aria-hidden="true"
->
-
-    <div class="admin-modal-card">
-
-        <button
-            class="admin-modal-close"
-            id="confirmationClose"
-            type="button"
-            aria-label="Fechar"
-        >
-            ×
-        </button>
-
-        <h2 id="confirmationTitle">
-            Confirmar ação
-        </h2>
-
-        <p id="confirmationMessage">
-            Tem certeza?
-        </p>
-
-        <div class="admin-modal-actions">
-
-            <button
-                class="admin-secondary-button"
-                id="confirmationCancel"
-                type="button"
-            >
-                Cancelar
-            </button>
-
-            <button
-                class="admin-danger-button"
-                id="confirmationConfirm"
-                type="button"
-            >
-                Confirmar
-            </button>
-
         </div>
 
-    </div>
+    </section>
+
+
+</main>
+```
 
 </div>
 
+<!-- ========================================================
+     BLOQUEIO / CARREGAMENTO
+     ======================================================== -->
 
-<!-- =========================================================
+<div
+    class="admin-loading-screen"
+    id="adminLoadingScreen"
+>
+
+```
+<div class="admin-loading-card">
+
+    <strong>
+        Boletim Carioca
+    </strong>
+
+    <span>
+        Verificando acesso...
+    </span>
+
+</div>
+```
+
+</div>
+
+<!-- ========================================================
      SUPABASE
-     ========================================================= -->
+     ======================================================== -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<!-- ========================================================
+     APLICAÇÃO DO PAINEL
+     ======================================================== -->
 
 <script src="../js/admin.js"></script>
 
